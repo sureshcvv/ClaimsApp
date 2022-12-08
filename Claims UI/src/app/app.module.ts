@@ -43,6 +43,7 @@ import { ClaimsApiService } from './claims-api.service';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import { ClaimsDetailsComponent } from './components/claims-details/claims-details.component';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
+import { AuthGuard } from './auth.guard';
 
 @NgModule({
   declarations: [
@@ -89,7 +90,7 @@ import {MatSnackBarModule} from '@angular/material/snack-bar';
    MatAutocompleteModule,
    MatSnackBarModule
   ],
-  providers: [ClaimsApiService],
+  providers: [ClaimsApiService,AuthGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
