@@ -1,0 +1,50 @@
+version: '3'
+services:
+  eureka-server:
+    build: D:\miracleproject\server
+    image: eureka-server
+    ports: 
+    - "8761:8761"
+  claims:
+    build: D:\miracleproject\claims 
+    image: claims
+    container_name: claims
+    ports:
+    - "8100:8100"
+    links:
+    - eureka-server
+    depends_on:
+     - mongodb
+    environment:
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka-server:8761/eureka
+  facility: 
+    build: D:\miracleproject\facility 
+    image: facility
+    container_name: facility
+    ports:
+    - "8200:8200"
+    links:
+    - eureka-server
+    depends_on:
+     - mongodb
+    environment:
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka-server:8761/eureka
+  api-gateway:
+    build: D:\miracleproject\Gateway
+    image: apigateway
+    container_name: apigateway
+    depends_on:
+     - eureka-server
+    environment:
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka-server:8761/eureka
+    restart: always
+    ports:
+        - "8080:8080"
+  mongodb:
+    image : mongo
+    container_name: mongodb
+    ports: 
+      - "27017:27017"
+    restart: unless-stopped
+   
+  
