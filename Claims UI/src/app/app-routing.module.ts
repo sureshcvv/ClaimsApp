@@ -11,10 +11,13 @@ const routes: Routes = [
 },
 {
   path: 'home',
-  component: DashboardComponent,canActivate:[AuthGuard]
+  component: DashboardComponent, canActivate:[AuthGuard]
 },{
   path: '**',
-  redirectTo:'login'
+  component: LoginComponent
+},{
+  path: '',
+  component: LoginComponent
 },
 ];
 

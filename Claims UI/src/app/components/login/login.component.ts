@@ -23,8 +23,8 @@ export class LoginComponent implements OnInit {
   public userLogin() {
     const {username, password} = this.loginForm.value;
     if(username === this.userDetails.username && password === this.userDetails.password ) {
-      this.loginFlag = true;
       localStorage.setItem('userDetails','admin');
+      this.loginFlag = true;
       this.router.navigate(['/home']);
     } else{
       this.loginFlag = false;

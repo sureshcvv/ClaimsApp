@@ -31,7 +31,7 @@ import io.swagger.annotations.ApiResponses;
  * The Class ClaimsController.
  */
 @RestController
-@CrossOrigin(origins="https://app-test-demo.vercel.app")
+@CrossOrigin(origins="http://localhost:4200")
 public class ClaimsController {
 
 	/** The claims services. */

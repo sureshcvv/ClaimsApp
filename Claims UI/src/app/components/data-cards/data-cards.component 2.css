@@ -19,10 +19,3 @@
 .paid-amount{
     color: #FFC235;
 }
-.date {
-    width: 15%;
-}
-
-::ng-deep .cdk-overlay-pane {
-    overflow:visible
-}
