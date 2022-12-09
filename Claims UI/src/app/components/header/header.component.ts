@@ -16,6 +16,7 @@ export class HeaderComponent implements OnInit {
     console.log(this.dashboard.toggle());
   }
   public onLogOut() {
+    localStorage.removeItem('userDetails');
     this.router.navigate(['login']);
   }
 

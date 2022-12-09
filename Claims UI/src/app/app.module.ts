@@ -5,7 +5,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
 import { DashboardComponent } from './components/dashboard/dashboard.component';
-import { DataTableComponent } from './components/data-table/data-table.component';
+import { DataTableComponent, DataTableOrdersComponent } from './components/data-table/data-table.component';
 import { DoughnutChartComponent } from './components/doughnut-chart/doughnut-chart.component';
 import { BarChartComponent } from './components/bar-chart/bar-chart.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -15,6 +15,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import {MatCardModule} from '@angular/material/card';
 import { ChartsModule } from 'ng2-charts';
 import {MatToolbarModule} from '@angular/material/toolbar';
+import {MatSelectModule} from '@angular/material/select';
 
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import {MatButtonModule} from '@angular/material/button';
@@ -31,7 +32,7 @@ import {NgxPrintModule} from 'ngx-print';
 import {MatNativeDateModule} from '@angular/material/core';
 import {HttpClientModule} from '@angular/common/http';
 import {MatDatepickerModule} from '@angular/material/datepicker';
-import { AddClaimComponent } from './components/add-claims/add-claims.component';
+import { AddClaimComponent, BottomSheetOverviewExampleSheet, DialogBoxComponent } from './components/add-claims/add-claims.component';
 import {MatBottomSheetModule} from '@angular/material/bottom-sheet';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 import { LoginComponent } from './components/login/login.component';
@@ -43,6 +44,9 @@ import { ClaimsApiService } from './claims-api.service';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import { ClaimsDetailsComponent } from './components/claims-details/claims-details.component';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import {MatGridListModule} from '@angular/material/grid-list';
+import { AuthGuard } from './auth.guard';
 
 @NgModule({
   declarations: [
@@ -56,7 +60,10 @@ import {MatSnackBarModule} from '@angular/material/snack-bar';
     AddClaimComponent,
     LoginComponent,
     DetailsModalComponent,
-    ClaimsDetailsComponent
+    ClaimsDetailsComponent,
+    DialogBoxComponent,
+    DataTableOrdersComponent,
+    BottomSheetOverviewExampleSheet
   ],
   imports: [
     BrowserModule,
@@ -87,9 +94,13 @@ import {MatSnackBarModule} from '@angular/material/snack-bar';
    MatProgressBarModule,
    MatTooltipModule,
    MatAutocompleteModule,
-   MatSnackBarModule
+   MatSnackBarModule,
+   MatProgressSpinnerModule,
+   HttpClientModule,
+   MatGridListModule,
+   MatSelectModule
   ],
-  providers: [ClaimsApiService],
+  providers: [ClaimsApiService,AuthGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

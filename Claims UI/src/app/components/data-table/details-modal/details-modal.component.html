@@ -1,5 +1,63 @@
-<h3 class="header">Claim Details for AMC Claim : {{data.amcClaim}}</h3>
-<mat-dialog-content class="mat-typography custom-dialog-container" fxLayoutGap="20px" fxLayout="column">
+<h3>Claim Details for AMC
+    <mat-icon matSuffix style="float: right;">close</mat-icon>
+
+</h3>
+<!-- <mat-list fxFlexFill fxLayout="row" fxLayoutGap="10px">
+    <mat-list-item *ngFor="let item of columns">{{item.name}}: {{ claimData[item.props] }}</mat-list-item>
+</mat-list> -->
+<!-- <mat-grid-list cols="1" rowHeight="100px">
+    <mat-grid-tile *ngFor="let item of columns">
+        <div style="text-align: left;">
+            {{item.name}}
+
+        </div>
+    </mat-grid-tile>
+</mat-grid-list>  -->
+
+<mat-list>
+    <mat-list-item>
+        <span matListItemTitle>Claim ID : </span>
+        <span matListItemLine>{{claimData['claimId']}}</span>
+    </mat-list-item>
+    <mat-list-item>
+        <span matListItemTitle>Facility ID : </span>
+        <span matListItemLine>{{claimData['facilityId']}}</span>
+    </mat-list-item>
+    <mat-list-item>
+        <span matListItemTitle>Pallet Quantity : </span>
+        <span matListItemLine>{{claimData['palletQuantity']}}</span>
+    </mat-list-item>
+    <mat-list-item>
+        <span matListItemTitle>Document Type : </span>
+        <span matListItemLine>{{claimData['documentType']}}</span>
+    </mat-list-item>
+    <mat-list-item>
+        <span matListItemTitle>Claimed Amount : </span>
+        <span matListItemLine>{{claimData['claimedAmount']}}</span>
+    </mat-list-item>
+    <mat-list-item>
+        <span matListItemTitle>Service Provider Claim ID : </span>
+        <span matListItemLine>{{claimData['serviceProviderClaimId']}}</span>
+    </mat-list-item>
+    <mat-list-item>
+        <span matListItemTitle>Claim Status : </span>
+        <span matListItemLine>{{claimData['claimStatus']}}</span>
+    </mat-list-item>
+    <mat-list-item>
+        <span matListItemTitle>Claim Type : </span>
+        <span matListItemLine>{{claimData['claimType']}}</span>
+    </mat-list-item>
+    <!-- <mat-list-item>
+        <span matListItemTitle>Creation Date : </span>
+        <span matListItemLine>{{claimData['creationDate']}}</span>
+    </mat-list-item> -->
+
+</mat-list>
+
+
+
+<!-- <h3 class="header">Claim Details for AMC Claim : {{data.amcClaim}}</h3> -->
+<!-- <mat-dialog-content class="mat-typography custom-dialog-container" fxLayoutGap="20px" fxLayout="column">
     <mat-card class="mat-list-data" fxLayoutGap="10px" fxLayout="row"><span class="pl-2 pr-4">
             <mat-icon>account_balance_wallet</mat-icon>
         </span><span class="modal-info">Account : {{data.account}}</span></mat-card>
@@ -37,4 +95,4 @@
             <mat-icon>close</mat-icon>Cancel
         </button>
     </span>
-</mat-dialog-actions>
+</mat-dialog-actions> -->
