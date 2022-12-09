@@ -76,9 +76,15 @@ public class ClaimsServiceImpl implements ClaimsService {
 		return claim;
 	}
 	@Override
-	public Claim getFacilityClaim(String facilityId) {
+	public ResponseEntity<List<Claim>> getFacilityClaim(String facilityId) {
 		// TODO Auto-generated method stub
-		return claimsRepository.findByFacilityId(facilityId);
+		List<Claim> list = new ArrayList<>();
+		if(facilityId == null) {
+			claimsRepository.findAll().forEach(list::add);
+		}else {
+			claimsRepository.findByFacilityId(facilityId).forEach(list::add);
+		}		
+		return new ResponseEntity<>(list,new HttpHeaders(), HttpStatus.OK); 
 
 	}
 

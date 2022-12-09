@@ -1,12 +1,12 @@
-D:\miracleproject\claims\src\main\java\com\miracle\claims\entity\Claim.java
-D:\miracleproject\claims\src\main\java\com\miracle\claims\exception\GlobalExceptionHandler.java
-D:\miracleproject\claims\src\main\java\com\miracle\claims\config\SwaggerConfig.java
-D:\miracleproject\claims\src\main\java\com\miracle\claims\ClaimsApplication.java
-D:\miracleproject\claims\src\main\java\com\miracle\claims\entity\ClaimsSequence.java
-D:\miracleproject\claims\src\main\java\com\miracle\claims\repository\ClaimsRepository.java
-D:\miracleproject\claims\src\main\java\com\miracle\claims\service\ClaimsService.java
-D:\miracleproject\claims\src\main\java\com\miracle\claims\controller\ClaimsController.java
-D:\miracleproject\claims\src\main\java\com\miracle\claims\exception\ErrorDetails.java
-D:\miracleproject\claims\src\main\java\com\miracle\claims\service\ClaimsSequenceGeneratorService.java
-D:\miracleproject\claims\src\main\java\com\miracle\claims\service\ClaimsServiceImpl.java
-D:\miracleproject\claims\src\main\java\com\miracle\claims\entity\ClaimsResponse.java
+D:\ClaimsApp\Claims API\claims\src\main\java\com\miracle\claims\config\SwaggerConfig.java
+D:\ClaimsApp\Claims API\claims\src\main\java\com\miracle\claims\service\ClaimsService.java
+D:\ClaimsApp\Claims API\claims\src\main\java\com\miracle\claims\service\ClaimsServiceImpl.java
+D:\ClaimsApp\Claims API\claims\src\main\java\com\miracle\claims\entity\ClaimsSequence.java
+D:\ClaimsApp\Claims API\claims\src\main\java\com\miracle\claims\entity\Claim.java
+D:\ClaimsApp\Claims API\claims\src\main\java\com\miracle\claims\exception\GlobalExceptionHandler.java
+D:\ClaimsApp\Claims API\claims\src\main\java\com\miracle\claims\service\ClaimsSequenceGeneratorService.java
+D:\ClaimsApp\Claims API\claims\src\main\java\com\miracle\claims\controller\ClaimsController.java
+D:\ClaimsApp\Claims API\claims\src\main\java\com\miracle\claims\repository\ClaimsRepository.java
+D:\ClaimsApp\Claims API\claims\src\main\java\com\miracle\claims\ClaimsApplication.java
+D:\ClaimsApp\Claims API\claims\src\main\java\com\miracle\claims\entity\ClaimsResponse.java
+D:\ClaimsApp\Claims API\claims\src\main\java\com\miracle\claims\exception\ErrorDetails.java

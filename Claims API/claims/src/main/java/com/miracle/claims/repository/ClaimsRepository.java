@@ -12,7 +12,8 @@ public interface ClaimsRepository extends MongoRepository<Claim, String> {
 
 	public Claim deleteByServiceProviderClaimId(long serverProviderClaimId);
 	public Claim findByServiceProviderClaimId(long serverProviderClaimId);
-	public Claim findByFacilityId(String facilityId);
+	@Query("facility_id : ?0")
+	public List<Claim> findByFacilityId(String facilityId);
 	
 	@Query(value= "{}",fields="{claim_status : 1}")
 	public List<Claim> findClaimsbyStatus();

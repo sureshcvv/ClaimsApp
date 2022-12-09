@@ -29,6 +29,18 @@ services:
      - mongodb
     environment:
       EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka-server:8761/eureka
+  customer: 
+    build: D:\miracleproject\customer\customer 
+    image: customer
+    container_name: customer
+    ports:
+    - "8400:8400"
+    links:
+    - eureka-server
+    depends_on:
+     - mongodb
+    environment:
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka-server:8761/eureka
   api-gateway:
     build: D:\miracleproject\Gateway
     image: apigateway

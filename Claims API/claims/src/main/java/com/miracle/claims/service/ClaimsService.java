@@ -21,7 +21,7 @@ public interface ClaimsService {
 
 	public ResponseEntity<List<Claim>> getClaimsByType(String claimType);
 
-	public Claim getFacilityClaim(String facilityId);
+	public ResponseEntity<List<Claim>> getFacilityClaim(String facilityId);
 	
 	public ResponseEntity<List<Claim>> getClaimsByStatus(String claimStatus);
 

@@ -24,6 +24,10 @@ spring:
         uri: lb://facility
         predicates:
         - Path=/facility/**
+      - id: customer
+        uri: lb://customer
+        predicates:
+        - Path=/customer/**
  
 
           

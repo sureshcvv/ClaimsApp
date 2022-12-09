@@ -210,10 +210,9 @@ public class ClaimsController {
 			@ApiResponse(code = 405, message = "Method not allowed", response = ErrorDetails.class),
 			@ApiResponse(code = 500, message = "Internal server error", response = ErrorDetails.class) })
 	@GetMapping("/claims/facility/{facilityId}")
-	public ResponseEntity<Claim> getClaimsByFacilityId(
+	public ResponseEntity<List<Claim>> getClaimsByFacilityId(
 			@ApiParam(value = "Facility Id", required = true) @PathVariable("facilityId") String facilityId) {
-		return new ResponseEntity<Claim>(claimsServices.getFacilityClaim(facilityId),new HttpHeaders(),
-				HttpStatus.OK);
+		return claimsServices.getFacilityClaim(facilityId);
 	}
 	
 	/**
