@@ -78,7 +78,7 @@
     </mat-card>
 
     <mat-card *ngIf="sortingfilters && tableType == 'order'">
-        <form [formGroup]="filteredObject" fxFlexFill fxLayoutGap="40px" fxLayout="row">
+        <form [formGroup]="filteredObject">
             <mat-form-field appearance="outline">
                 <mat-label>Date Created Range</mat-label>
                 <mat-date-range-input [formGroup]="campaignTwo" [rangePicker]="campaignTwoPicker" [comparisonStart]="campaignOne.value.start" [comparisonEnd]="campaignOne.value.end">
@@ -93,8 +93,8 @@
                 <mat-label>Facility</mat-label>
                 <input type="text" placeholder="Pick one" formControlName="facility" aria-label="Number" matInput [matAutocomplete]="auto">
                 <mat-autocomplete #auto="matAutocomplete">
-                    <mat-option *ngFor="let option of facilityList" [value]="option">
-                        {{option}}
+                    <mat-option *ngFor="let option of facilityList" [value]="option.facilityName">
+                        {{option.facilityName}}
                     </mat-option>
                 </mat-autocomplete>
             </mat-form-field>
@@ -109,8 +109,8 @@
             </mat-form-field>
             <mat-form-field appearance="outline">
                 <mat-label>Customer Reference Number</mat-label>
-                <input type="text" placeholder="Pick one" formControlName="customer" aria-label="Number" matInput [matAutocomplete]="auto">
-                <mat-autocomplete #auto="matAutocomplete">
+                <input type="text" placeholder="Pick one" formControlName="customer" aria-label="Number" matInput [matAutocomplete]="auto2">
+                <mat-autocomplete #auto2="matAutocomplete">
                     <mat-option *ngFor="let option of customerList" [value]="option">
                         {{option}}
                     </mat-option>
@@ -118,8 +118,8 @@
             </mat-form-field>
             <mat-form-field appearance="outline">
                 <mat-label>AMC Reference Number</mat-label>
-                <input type="text" placeholder="Pick one" formControlName="customer" aria-label="Number" matInput [matAutocomplete]="auto">
-                <mat-autocomplete #auto="matAutocomplete">
+                <input type="text" placeholder="Pick one" formControlName="customer" aria-label="Number" matInput [matAutocomplete]="auto3">
+                <mat-autocomplete #auto3="matAutocomplete">
                     <mat-option *ngFor="let option of customerList" [value]="option">
                         {{option}}
                     </mat-option>

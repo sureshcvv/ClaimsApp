@@ -7,6 +7,7 @@ import { ViewEncapsulation } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { ClaimsDetailsComponent } from '../claims-details/claims-details.component';
 import { ClaimsApiService } from 'src/app/claims-api.service';
+import { zip } from 'rxjs';
 
 const today = new Date();
 const month = today.getMonth();
@@ -301,9 +302,11 @@ export class DataTableOrdersComponent implements OnInit {
 	ngOnInit(): void {
 		this.filteredColumns = this.columns.filter(column => column.show === true);
 		this.filteredRows = this.rows;
-		this.facilityList = this.http.getFacility();
+		let source$ = zip(this.http.getFacility());
+		source$.subscribe(([facility])=>{
+			this.facilityList = facility;
+		})
 		this.customerList = this.http.getCustomer();
-		console.log(this.facilityList, this.customerList);
 	}
 	public togglecolumnCheckbox(column: any) {
 		const isChecked = column.show;
