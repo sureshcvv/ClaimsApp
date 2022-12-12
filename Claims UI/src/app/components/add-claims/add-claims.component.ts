@@ -112,7 +112,7 @@ export class AddClaimComponent implements OnInit,DoCheck {
     this.spinner = false;
     this.ordersDataItems = this.http.getOrders();
     setTimeout(() => {
-      this.facilityList = this.http.getFacility().splice(0,1);
+      // this.facilityList = this.http.getFacility().splice(0,1);
       if(this.facilityList.length==1){
         this.firstFormGroup.controls.facility.setValue(this.facilityList[0]);
       }

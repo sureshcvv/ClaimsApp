@@ -62,7 +62,9 @@ export class ClaimsDetailsComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.userMode = localStorage.getItem('userDetails') ? localStorage.getItem('userDetails') : 'user';
-    this.facilityList = this.http.getFacility();
+    this.http.getFacility().subscribe((data:any)=>{
+      this.facilityList = data;
+    });
     this.customerList = this.http.getCustomer();
     setTimeout(() => {
       this.ordersList = this.data.orders;

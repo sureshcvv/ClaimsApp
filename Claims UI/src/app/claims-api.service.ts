@@ -78,9 +78,7 @@ export class ClaimsApiService {
   constructor(private http: HttpClient) { }
 
   getFacility() {
-    return this.ordersList.map(item => {
-      return item.facilityId;
-    })
+    return this.http.get(environment.URL + `/facility`);
   }
 
   getCustomer() {
@@ -104,7 +102,14 @@ export class ClaimsApiService {
   getClaims() {
     return this.http.get(environment.URL + '/claims');
   }
-  getClaimsById(id:string) {
+  getClaimsById(id: string) {
     return this.http.get(environment.URL + `/claims/${id}`);
+  }
+  getClaimByFacility(id: string) {
+    if (id) {
+      return this.http.get(environment.URL + `/claims/facility/${id}`);
+    } else {
+      return this.http.get(environment.URL + `/claims`);
+    }
   }
 }
