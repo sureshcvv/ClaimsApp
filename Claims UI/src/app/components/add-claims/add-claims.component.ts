@@ -116,7 +116,7 @@ export class AddClaimComponent implements OnInit,DoCheck {
       if(this.facilityList.length==1){
         this.firstFormGroup.controls.facility.setValue(this.facilityList[0]);
       }
-      this.customerList = this.http.getCustomer().splice(0,1);
+      // this.customerList = this.http.getCustomer().splice(0,1);
       if(this.customerList.length==1){
         this.firstFormGroup.controls.customer.setValue(this.customerList[0]);
       }
@@ -141,12 +141,29 @@ export class AddClaimComponent implements OnInit,DoCheck {
     const confirmDialog = this.dialog.open(DialogBoxComponent, { data: { orders: this.http.getOrders() }, autoFocus: false });
     confirmDialog.afterClosed().subscribe(result => {
       // console.log(result);
+      
       if (result) {
-        const dialogRef = this.dialog.open(DetailsModalComponent, { data: { orders: this.http.getOrders() }, autoFocus: false });
+        let claim = {
+          "claimId": "8",
+          "facilityId": this.ordersList.formValues.facility ? this.ordersList.formValues.facility : this.ordersList.row[0].facilityId,
+          "palletQuantity": this.ordersList.row[0].quantity,
+          "documentType": "inbound receipt",
+          "claimedAmount": this.costDetails.value.cost,
+          "claimStatus": "Open",
+          "claimType": "WAREHOUSE",
+          "lastUpdateId": "8",
+          "createDate": new Date(),
+          "lastUpdateDate": "8"
+          }
+          console.log(claim);
+        this.http.createClaim(claim).subscribe(data=>{
+          location.reload();
+        })
+        // const dialogRef = this.dialog.open(DetailsModalComponent, { data: { orders: this.http.getOrders() }, autoFocus: false });
 
-        dialogRef.afterClosed().subscribe(result => {
-          console.log(`Dialog result: ${result}`);
-        });
+        // dialogRef.afterClosed().subscribe(result => {
+        //   console.log(`Dialog result: ${result}`);
+        // });
       }
 
     });
@@ -158,11 +175,12 @@ export class AddClaimComponent implements OnInit,DoCheck {
   ColumnMode = ColumnMode;
 
   filteredColumns = [{ "name": "Item", "props": "item", width: 60 }, { "name": "Description", props: "des" }, { "name": "Date Code", props: "dateCode" }, { "name": "LOT", props: "lot" }, { "name": "Quantity", props: "quantity" }, { "name": "LPN", props: "LPN" }, { "name": "NET", props: "NET" }];
-  ordersList:any = [];
+  ordersList:any = {row:[],formValues:{}};
   listItems(items:any){
-    this.ordersList = [];
+    this.ordersList = {row:[],formValues:{}};
     setTimeout(()=>{
     this.ordersList = items;
+    console.log(this.ordersList);
 
     },500)
     // this.ordersList = items;

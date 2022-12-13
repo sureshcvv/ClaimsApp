@@ -7,7 +7,7 @@
 
     <app-data-order-table [rows]="ordersDataItems" (newItemEvent)="listItems($event)" [showActions]="true">
     </app-data-order-table>
-    <mat-card *ngIf="ordersList.length > 0">
+    <mat-card *ngIf="ordersList.row.length > 0">
         <mat-card-header style="background-color: #ffc235;border-radius:4px;">
 
             <mat-card-subtitle style="
@@ -38,7 +38,7 @@
             </mat-form-field>
         </form>
         <div>
-            <ngx-datatable class="material" [scrollbarH]="true" [rows]="ordersList" [columnMode]="ColumnMode.force" [headerHeight]="40" [footerHeight]="40" [rowHeight]="40" [limit]="10">
+            <ngx-datatable class="material" [scrollbarH]="true" [rows]="ordersList.row" [columnMode]="ColumnMode.force" [headerHeight]="40" [footerHeight]="40" [rowHeight]="40" [limit]="10">
                 <ngx-datatable-column *ngFor="let col of filteredColumns" [name]="col.name" [prop]="col.props">
                 </ngx-datatable-column>
                 <ngx-datatable-column name="Claim QTY" [width]="90" [frozenRight]="true" style="background-color: grey;">
@@ -93,7 +93,7 @@
 
 
     </mat-card>
-    <mat-card *ngIf="ordersList.length > 0">
+    <mat-card *ngIf="ordersList.row.length > 0">
         <mat-card-header style="background-color: #ffc235;border-radius:4px;">
 
             <mat-card-subtitle style="

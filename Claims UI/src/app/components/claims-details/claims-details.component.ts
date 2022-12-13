@@ -65,7 +65,7 @@ export class ClaimsDetailsComponent implements OnInit, OnDestroy {
     this.http.getFacility().subscribe((data:any)=>{
       this.facilityList = data;
     });
-    this.customerList = this.http.getCustomer();
+    // this.customerList = this.http.getCustomer();
     setTimeout(() => {
       this.ordersList = this.data.orders;
 
