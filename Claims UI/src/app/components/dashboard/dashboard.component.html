@@ -12,12 +12,12 @@
         </mat-list>
     </mat-drawer>
 
-    <div class="example-sidenav-content" *ngIf="navOptions == 'home'"  #dashboard>
+    <div class="example-sidenav-content" *ngIf="navOptions == 'home'" #dashboard>
 
-        <div fxLayout="row" fxLayoutAlign="start center" >
+        <div fxLayout="row" fxLayoutAlign="start center">
             <mat-form-field appearance="outline">
-                <mat-select matNativeControl required placeholder="Year" (selectionChange)="yearrange($event)" >
-                  <mat-option>None</mat-option>
+                <mat-select matNativeControl required placeholder="Year" (selectionChange)="yearrange($event)">
+                    <mat-option>None</mat-option>
                     <mat-option value="2022" selected>2022</mat-option>
                     <mat-option value="2021">2021</mat-option>
                     <mat-option value="2020">2020</mat-option>
@@ -26,9 +26,9 @@
                 </mat-select>
                 <mat-label>Claim details for Year</mat-label>
             </mat-form-field>
-            </div>
+        </div>
 
-        <div fxFlexFill fxLayout="column" fxLayoutGap="20px" fxFlexFill class="dashboard"  *ngIf="show">
+        <div fxFlexFill fxLayout="column" fxLayoutGap="20px" fxFlexFill class="dashboard" *ngIf="show">
             <div>
                 <app-data-cards [rowData]="claims" (year)="getYear($event)" [notify]="notifyObj"></app-data-cards>
             </div>
@@ -42,8 +42,8 @@
                         <mat-slide-toggle #slider color="primary">Closed Claims</mat-slide-toggle>
                     </div>
                     <mat-card-header>
-                        <mat-card-subtitle *ngIf="!slider.checked">Top 5 Open Claims</mat-card-subtitle>
-                        <mat-card-subtitle *ngIf="slider.checked">Top 5 Closed Claims</mat-card-subtitle>
+                        <mat-card-subtitle *ngIf="!slider.checked">Top 5 Open Claims Claimed Amount</mat-card-subtitle>
+                        <mat-card-subtitle *ngIf="slider.checked">Top 5 Closed Claims Claimed Amount</mat-card-subtitle>
 
                     </mat-card-header>
                     <app-bar-chart *ngIf="!slider.checked" [claimData]="openClaims" [barchartColor]="openBarChartColor" [barSize]="openSize">

@@ -20,7 +20,15 @@ export class BarChartComponent implements OnInit {
     animation: {
       animateScale: true
     },
+    tooltips:{
+      callbacks:{
+        label: (e)=>{
+          return '$ '+e.value;
+        }
+      }
+    },
     scales: {
+      
       xAxes: [
         {
           stacked: false,
@@ -33,8 +41,11 @@ export class BarChartComponent implements OnInit {
         {
           stacked: false,
           ticks: {
-            min: 0
-          }
+            // Include a dollar sign in the ticks
+            callback: function(value, index, ticks) {
+                return '$' + value;
+            }
+        }
         }
       ]
     }
@@ -58,8 +69,8 @@ export class BarChartComponent implements OnInit {
   ngOnInit(): void {
     this.http.getClaims().subscribe((data:any)=>{
      let amount:any =[];
-      data.forEach((claim:any)=>{
-        this.barChartLabels.push(claim.facilityId);
+      data.forEach((claim:any,index:number)=>{
+        this.barChartLabels.push(this.claimData[index]?.masterAcct);
         amount.push(Math.floor(Number(claim.claimedAmount.toString().replace(',',''))));
       })
       amount.sort((a:number,b:number)=>{

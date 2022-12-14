@@ -86,7 +86,7 @@ export class DataTableComponent implements OnInit {
 	}, {
 		name: "Claimed Amount",
 		props: "claimedAmount",
-		type: "number",
+		type: "text",
 		show: false
 	},
 	{
@@ -143,7 +143,7 @@ export class DataTableComponent implements OnInit {
 				if (!item.creationDate) {
 					item.creationDate = this.rows[index].date
 				}
-				item.claimedAmount = Number(item.claimedAmount ? item.claimedAmount : 0);
+				item.claimedAmount = '$' +Number(item.claimedAmount ? item.claimedAmount : 0);
 
 				return { ...this.rows[index], ...item }
 			});

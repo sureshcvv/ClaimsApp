@@ -8169,12 +8169,12 @@ export class DashboardComponent implements OnInit {
     this.openClaims.forEach((elem: any) => {
       elem.claimedAmount = +elem.claimedAmount.toString().substring(1).replace(',', '');
     })
-    this.openClaims = this.openClaims.sort((a: any, b: any) => b.claimedAmount - a.claimedAmount).slice(0, 5);
+    this.openClaims = this.openClaims.sort((a: any, b: any) => b.claimedAmount - a.claimedAmount);
     this.closedClaims = this.claims.filter((claim: any) => claim.status === 'Closed');
     this.closedClaims.forEach((elem: any) => {
       elem.claimedAmount = +elem.claimedAmount.toString().substring(1).replace(',', '');
     })
-    this.closedClaims = this.closedClaims.sort((a: any, b: any) => b.claimedAmount - a.claimedAmount).slice(0, 5);
+    this.closedClaims = this.closedClaims.sort((a: any, b: any) => b.claimedAmount - a.claimedAmount);
     this.claims.forEach((element: any) => {
       if (this.statusData.hasOwnProperty(element.status)) {
         this.statusData[element.status] += 1;
@@ -8182,6 +8182,8 @@ export class DashboardComponent implements OnInit {
         this.statusData[element.status] = 1;
       }
     })
+    this.openClaims = this.claims;
+    this.closedClaims = this.claims;
   }
 
   yearrange(event:any){
