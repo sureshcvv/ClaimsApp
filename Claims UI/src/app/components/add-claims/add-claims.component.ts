@@ -195,7 +195,7 @@ export class AddClaimComponent implements OnInit,DoCheck {
   selector: 'app-add-dialogBox',
   template: `<mat-card color="primary">
   <mat-card-header style="background-color: #36a2eb;border-radius:4px;">
-    <mat-card-title style="margin-top: 2%;">Dublicates Exists</mat-card-title>
+    <mat-card-title style="margin-top: 2%;">Duplicate Exists</mat-card-title>
     <mat-card-subtitle>Claim with same customer reference number and amc reference number is created. Do you wish to proceed?</mat-card-subtitle>
   </mat-card-header>
   <mat-card-actions>
