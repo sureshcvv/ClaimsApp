@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 
@@ -18,7 +18,7 @@ export class ClaimsApiService {
       "NET": 27,
       "customerReference": 65470,
       "AMCRefenrence": 83100,
-      "facilityId": "Louisiana",
+      "facilityId": "PAH00000",
       "customerId": "Dubois"
     },
     {
@@ -31,7 +31,7 @@ export class ClaimsApiService {
       "NET": 25,
       "customerReference": 22788,
       "AMCRefenrence": 12800,
-      "facilityId": "Alabama",
+      "facilityId": "PAH00000",
       "customerId": "Toftrees"
     },
     {
@@ -44,7 +44,7 @@ export class ClaimsApiService {
       "NET": 23,
       "customerReference": 58233,
       "AMCRefenrence": 33049,
-      "facilityId": "Arizona",
+      "facilityId": "PAH00000",
       "customerId": "Catherine"
     },
     {
@@ -57,7 +57,7 @@ export class ClaimsApiService {
       "NET": 21,
       "customerReference": 88912,
       "AMCRefenrence": 99758,
-      "facilityId": "Indiana",
+      "facilityId": "PAH00000",
       "customerId": "Greensburg"
     },
     {
@@ -70,7 +70,7 @@ export class ClaimsApiService {
       "NET": 25,
       "customerReference": 22169,
       "AMCRefenrence": 73071,
-      "facilityId": "Kansas",
+      "facilityId": "PAH00000",
       "customerId": "Newcastle"
     }
   ]
@@ -82,9 +82,8 @@ export class ClaimsApiService {
   }
 
   getCustomer() {
-    return this.ordersList.map(item => {
-      return item.customerId;
-    })
+    return this.http.get(environment.URL + `/customer`);
+
   }
   getCustomerReference() {
     return this.ordersList.map(item => {
@@ -111,5 +110,12 @@ export class ClaimsApiService {
     } else {
       return this.http.get(environment.URL + `/claims`);
     }
+  }
+  createClaim(claim: Object) {
+    const headers= new HttpHeaders()
+  .set('content-type', 'application/json')
+  .set('Access-Control-Allow-Origin', '*');
+
+    return this.http.post('http://localhost:8100/claims', claim,{headers});
   }
 }
