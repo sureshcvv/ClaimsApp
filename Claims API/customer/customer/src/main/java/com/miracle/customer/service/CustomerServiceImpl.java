@@ -21,25 +21,26 @@ public class CustomerServiceImpl implements CustomerService{
 		List<Customer> list = customerRepository.findAll();
 		return new ResponseEntity<List<Customer>>(list, new HttpHeaders(), HttpStatus.OK);
 	}
-
+	@Override
 	public ResponseEntity<Customer> createCustomer(Customer customer) {
 		// TODO Auto-generated method stub
 		return null;
 	}
-
+	@Override
 	public String deleteCustomer(Long customerId) {
 		// TODO Auto-generated method stub
 		return null;
 	}
-
+	@Override
 	public ResponseEntity<Customer> updateCustomer(Long CustomerId, Customer customer) {
 		// TODO Auto-generated method stub
 		return null;
 	}
-
+	@Override
 	public Customer getByCustomerId(Long customerId) {
 		return customerRepository.findByCustomerId(customerId);
 
 	}
+
 
 }

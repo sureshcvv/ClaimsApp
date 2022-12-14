@@ -170,14 +170,5 @@ public class ClaimsServiceImpl implements ClaimsService {
 }
 	
 
-	/**
-	@Override
-	public Claim getCustomerClaim(String claimId) {
-		return claimsRepository.findByCustomerClaimId(claimId);
-	}
-
-	
-
-	**/
 
 

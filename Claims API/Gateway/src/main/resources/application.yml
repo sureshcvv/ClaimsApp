@@ -5,10 +5,6 @@ management:
       web: 
         exposure: 
           include: '*'
-eureka:
-  client:
-    serviceUrl:
-      defaultZone: http://localhost:8761/eureka 
 
 spring:
   application:
@@ -28,6 +24,6 @@ spring:
         uri: lb://customer
         predicates:
         - Path=/customer/**
- 
+    
 
           
