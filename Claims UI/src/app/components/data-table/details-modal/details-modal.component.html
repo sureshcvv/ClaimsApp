@@ -1,11 +1,11 @@
-   <mat-card style="background-color: #4053b2;">
-        <mat-card-content>
-            <h3 class="fs-3">
-                Claim Details for AMC 
-                    <mat-icon class="float-end"  mat-dialog-close mat-icon-button >close</mat-icon>
-            </h3>
-        </mat-card-content>   
-    </mat-card>
+<mat-card style="background-color: #4053b2;">
+    <mat-card-content>
+        <h3 class="fs-3">
+            Claim Details for AMC
+            <mat-icon class="float-end" mat-dialog-close mat-icon-button>close</mat-icon>
+        </h3>
+    </mat-card-content>
+</mat-card>
 <br>
 <!-- <mat-list fxFlexFill fxLayout="row" fxLayoutGap="10px">
     <mat-list-item *ngFor="let item of columns">{{item.name}}: {{ claimData[item.props] }}</mat-list-item>
@@ -20,53 +20,55 @@
 </mat-grid-list>  -->
 
 <mat-list>
-        <mat-list-item class="list-group-item-primary">
-            <span matListItemLine>Claim ID : {{claimData['claimId']}}</span>
-            <!-- <span matListItemLine></span> -->
-        </mat-list-item>
-        <mat-divider></mat-divider>
-        <mat-list-item>
-            <span matListItemLine>Facility ID : {{claimData['facilityId']}} </span>
-            <!-- <span matListItemLine></span> -->
-        </mat-list-item>
-        <mat-divider></mat-divider>
-            <!-- <span matListItemTitle > </span> -->
-            <span matListItemLine>Pallet Quantity : {{claimData['palletQuantity']}}</span>
-        </mat-list-item>
-        <mat-divider></mat-divider>
-        <mat-list-item>
-           
-            <!-- <span matListItemTitle></span> -->
-            <span matListItemLine>Document Type : {{claimData['documentType']}}</span>
-        </mat-list-item>
-        <mat-divider></mat-divider>
-        <mat-list-item class="list-group-item-primary">
-            <!-- <span matListItemTitle></span> -->
-            <mat-icon style="margin-right: 10px; color: white;"> attach_money</mat-icon>
-            <span matListItemLine>Claimed Amount : {{claimData['claimedAmount']}}</span>
-        </mat-list-item>
-        <mat-divider></mat-divider>
-        <mat-list-item>
-            <!-- <span matListItemTitle></span> -->
-            <span matListItemLine>Service Provider Claim ID :  {{claimData['serviceProviderClaimId']}}</span>
-        </mat-list-item>
-        <mat-divider></mat-divider>
-        <mat-list-item class="list-group-item-primary">
-            <!-- <span matListItemTitle></span> -->
-            <span matListItemLine>Claim Status : {{claimData['claimStatus']}}</span>
-        </mat-list-item>
-        <mat-divider></mat-divider>
-        <mat-list-item>
-            <span matListItemLine>Claim Type : {{claimData['claimType']}} </span>
-            <!-- <span matListItemLine></span> -->
-        </mat-list-item> 
-        <mat-divider></mat-divider>
-        <mat-list-item class="list-group-item-primary">
-            <!-- <span matListItemTitle></span> -->
-            <span matListItemLine>Creation Date : {{claimData['creationDate']}}</span>
-        </mat-list-item> 
-    
-     </mat-list>
+    <mat-list-item class="list-group-item-primary">
+        <span matListItemLine>Claim ID : {{claimData['claimId']}}</span>
+        <!-- <span matListItemLine></span> -->
+    </mat-list-item>
+    <mat-divider></mat-divider>
+    <mat-list-item>
+        <span matListItemLine>Facility ID : {{claimData['facilityId']}} </span>
+        <!-- <span matListItemLine></span> -->
+    </mat-list-item>
+    <mat-divider></mat-divider>
+    <mat-list-item>
+
+        <!-- <span matListItemTitle > </span> -->
+        <span matListItemLine>Pallet Quantity : {{claimData['palletQuantity']}}</span>
+    </mat-list-item>
+    <mat-divider></mat-divider>
+    <mat-list-item>
+
+        <!-- <span matListItemTitle></span> -->
+        <span matListItemLine>Document Type : {{claimData['documentType']}}</span>
+    </mat-list-item>
+    <mat-divider></mat-divider>
+    <mat-list-item class="list-group-item-primary">
+        <!-- <span matListItemTitle></span> -->
+        <mat-icon style="margin-right: 10px; color: white;"> attach_money</mat-icon>
+        <span matListItemLine>Claimed Amount : {{claimData['claimedAmount']}}</span>
+    </mat-list-item>
+    <mat-divider></mat-divider>
+    <mat-list-item>
+        <!-- <span matListItemTitle></span> -->
+        <span matListItemLine>Service Provider Claim ID :  {{claimData['serviceProviderClaimId']}}</span>
+    </mat-list-item>
+    <mat-divider></mat-divider>
+    <mat-list-item class="list-group-item-primary">
+        <!-- <span matListItemTitle></span> -->
+        <span matListItemLine>Claim Status : {{claimData['claimStatus']}}</span>
+    </mat-list-item>
+    <mat-divider></mat-divider>
+    <mat-list-item>
+        <span matListItemLine>Claim Type : {{claimData['claimType']}} </span>
+        <!-- <span matListItemLine></span> -->
+    </mat-list-item>
+    <mat-divider></mat-divider>
+    <mat-list-item class="list-group-item-primary">
+        <!-- <span matListItemTitle></span> -->
+        <span matListItemLine>Creation Date : {{claimData['creationDate']}}</span>
+    </mat-list-item>
+
+</mat-list>
 
 
 

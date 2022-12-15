@@ -180,8 +180,8 @@ export class DataTableComponent implements OnInit {
 		XLSX.writeFile(wb, 'claims.xlsx');
 	}
 	openDialog(row: any) {
-		const dialogRef = this.dialog.open(DetailsModalComponent, { height: '400px',
-		width: '600px',  data: row, autoFocus: false });
+		const dialogRef = this.dialog.open(DetailsModalComponent, { height: '600px',
+		width: '1000px',  data: row, autoFocus: false });
 
 		dialogRef.afterClosed().subscribe(result => {
 			console.log(`Dialog result: ${result}`);
