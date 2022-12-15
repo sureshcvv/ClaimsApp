@@ -13,6 +13,12 @@ export class BarChartComponent implements OnInit {
   @Input() claimData: any[] = [];
   @Input() barchartColor: any;
   @Input() barSize: any;
+  @Input() set facilityId(id: string) {
+    this.facilityChange = id;
+    this.facilityCheck();
+  };
+  barchartFlag = true;
+  facilityChange: string = '';
   public openClaims: any[] = [];
   public barChartOptions: ChartOptions = {
     responsive: true,
@@ -20,15 +26,15 @@ export class BarChartComponent implements OnInit {
     animation: {
       animateScale: true
     },
-    tooltips:{
-      callbacks:{
-        label: (e)=>{
-          return '$ '+e.value;
+    tooltips: {
+      callbacks: {
+        label: (e) => {
+          return '$ ' + e.value;
         }
       }
     },
     scales: {
-      
+
       xAxes: [
         {
           stacked: false,
@@ -42,10 +48,10 @@ export class BarChartComponent implements OnInit {
           stacked: false,
           ticks: {
             // Include a dollar sign in the ticks
-            callback: function(value, index, ticks) {
-                return '$' + value;
+            callback: function (value, index, ticks) {
+              return '$' + value;
             }
-        }
+          }
         }
       ]
     }
@@ -62,24 +68,58 @@ export class BarChartComponent implements OnInit {
   public barChartLegends = false;
 
   public barChartColor: Color[] = [
-    { backgroundColor: ['#36A2EB', '#4BC0C0', '#FF6484', '#13FFFF', '#64FF16','#36A2EB', '#4BC0C0', '#FF6484', '#13FFFF', '#64FF16','#36A2EB', '#4BC0C0', '#FF6484', '#13FFFF', '#64FF16','#36A2EB', '#4BC0C0', '#FF6484', '#13FFFF', '#64FF16'] },
+    { backgroundColor: ['#36A2EB', '#4BC0C0', '#FF6484', '#13FFFF', '#64FF16', '#36A2EB', '#4BC0C0', '#FF6484', '#13FFFF', '#64FF16', '#36A2EB', '#4BC0C0', '#FF6484', '#13FFFF', '#64FF16', '#36A2EB', '#4BC0C0', '#FF6484', '#13FFFF', '#64FF16'] },
   ];
-  constructor(private http:ClaimsApiService) { }
+  constructor(private http: ClaimsApiService) { }
+
+  facilityCheck() {
+    this.barchartFlag = false;
+    this.barChartData[0].data = [];
+    this.barChartLabels = [];
+    if (this.facilityChange) {
+      this.http.getClaimByFacility(this.facilityChange).subscribe((data: any) => {
+        let amount: any = [];
+        data.forEach((claim: any, index: number) => {
+          this.barChartLabels.push(this.claimData[index]?.masterAcct);
+          amount.push(Math.floor(Number(claim.claimedAmount.toString().replace(',', ''))));
+        })
+        amount.sort((a: number, b: number) => {
+          return b - a
+        }).forEach((item: number) => {
+          this.barChartData[0].data.push(item);
+
+        });
+
+        this.barChartLabels = this.barChartLabels.slice(0, 5);
+        this.barchartFlag = true;
+
+      });
+    } else {
+      this.ngOnInit();
+    }
+
+  }
 
   ngOnInit(): void {
-    this.http.getClaims().subscribe((data:any)=>{
-     let amount:any =[];
-      data.forEach((claim:any,index:number)=>{
+    this.barchartFlag = false;
+
+    this.http.getClaims().subscribe((data: any) => {
+
+      let amount: any = [];
+      data.forEach((claim: any, index: number) => {
         this.barChartLabels.push(this.claimData[index]?.masterAcct);
-        amount.push(Math.floor(Number(claim.claimedAmount.toString().replace(',',''))));
+        amount.push(Math.floor(Number(claim.claimedAmount.toString().replace(',', ''))));
       })
-      amount.sort((a:number,b:number)=>{
-        return b-a}).forEach((item:number)=>{
+      amount.sort((a: number, b: number) => {
+        return b - a
+      }).forEach((item: number) => {
         this.barChartData[0].data.push(item);
 
       });
 
-      this.barChartLabels = this.barChartLabels.slice(0,5);
+      this.barChartLabels = this.barChartLabels.slice(0, 5);
+      this.barchartFlag = true;
+
     })
   }
 

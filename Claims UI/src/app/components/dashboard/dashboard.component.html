@@ -30,11 +30,11 @@
 
         <div fxFlexFill fxLayout="column" fxLayoutGap="20px" fxFlexFill class="dashboard" *ngIf="show">
             <div>
-                <app-data-cards [rowData]="claims" (year)="getYear($event)" [notify]="notifyObj"></app-data-cards>
+                <app-data-cards [rowData]="claims" (year)="getYear($event)" (facilityChange)="facilityChange($event)" [notify]="notifyObj"></app-data-cards>
             </div>
             <div fxFlexFill fxLayoutGap="20px" fxLayout="row">
                 <mat-card fxFlex="50%">
-                    <app-doughnut-chart [claimData]="statusData"></app-doughnut-chart>
+                    <app-doughnut-chart [claimData]="statusData" [facilityId]="facilityId"></app-doughnut-chart>
                 </mat-card>
                 <mat-card fxFlex="50%" fxFlexFill fxLayout="column">
                     <div fxFlex fxLayoutAlign="end start">
@@ -46,10 +46,10 @@
                         <mat-card-subtitle *ngIf="slider.checked">Top 5 Closed Claims Claimed Amount</mat-card-subtitle>
 
                     </mat-card-header>
-                    <app-bar-chart *ngIf="!slider.checked" [claimData]="openClaims" [barchartColor]="openBarChartColor" [barSize]="openSize">
+                    <app-bar-chart *ngIf="!slider.checked" [claimData]="openClaims" [facilityId]="facilityId" [barchartColor]="openBarChartColor" [barSize]="openSize">
                     </app-bar-chart>
 
-                    <app-bar-chart *ngIf="slider.checked" [claimData]="closedClaims" [barchartColor]="closedBarChartColor" [barSize]="closedSize"></app-bar-chart>
+                    <app-bar-chart *ngIf="slider.checked" [claimData]="closedClaims" [facilityId]="facilityId" [barchartColor]="closedBarChartColor" [barSize]="closedSize"></app-bar-chart>
 
                 </mat-card>
             </div>

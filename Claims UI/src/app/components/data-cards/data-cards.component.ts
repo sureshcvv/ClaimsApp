@@ -11,8 +11,9 @@ export class DataCardsComponent implements OnInit {
   @Input() rowData: any[] = [];
   @Input() notify = new Notifier();
   @Output() year: any = new EventEmitter();
+  @Output() facilityChange: any = new EventEmitter();
   public facilities: any = [];
-  public customers: any;
+  public customers: any = [];
   public claims: any;
   public claimAmount = 0;
   public paidAmount = 0;
@@ -38,7 +39,7 @@ export class DataCardsComponent implements OnInit {
   ngOnInit(): void {
     this.getFacility();
     this.getClaims('');
-
+    this.getCustomer();
     this.initFilter(this.rowData);
     this.Wearhouse = []
   }
@@ -49,28 +50,36 @@ export class DataCardsComponent implements OnInit {
   }
   getCustomer(){
     this.http.getCustomer().subscribe(data => {
-      this.facilities = data;
+      this.customers = data;
     })
   }
 
   getClaims(facilityId: string) {
+    
     this.claims = 0;
     this.claimAmount = 0;
     this.paidAmount = 0;
     this.http.getClaimByFacility(facilityId).subscribe((data: any) => {
+      if(!facilityId){
+        this.getCustomer();
+      }
       if (!data.length) {
+        this.customers = 1;
         this.claims = 1;
         this.claimAmount += Number(data.claimedAmount.replace(',', ''));
         this.paidAmount += Number(data.claimedAmount.replace(',', ''));
       } else {
         this.claims = data.length;
+        this.customers = data;
         data.forEach((element: any) => {
           this.claimAmount += Number(element.claimedAmount.replace(',', ''));
           this.paidAmount += Number(element.claimedAmount.replace(',', ''));
         });
       }
 
-    })
+    });
+
+      this.facilityChange.emit(facilityId);
   }
 
   ngAfterViewInit() {
@@ -82,7 +91,7 @@ export class DataCardsComponent implements OnInit {
     this.rowData = data;
 
     // this.facilities = Array.from(new Set(this.rowData.map(({ facility }) => facility)));
-    this.customers = Array.from(new Set(this.rowData.map(({ masterAcct }) => masterAcct)));
+    // this.customers = Array.from(new Set(this.rowData.map(({ masterAcct }) => masterAcct)));
     // this.claimAmount = 0;
     this.paidAmount = 0;
     this.rowData.forEach(element => {

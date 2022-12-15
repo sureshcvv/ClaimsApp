@@ -20,10 +20,11 @@ export class DashboardComponent implements OnInit {
   public openSize = 3000;
   public closedSize = 50000;
   selectedDataItems = [];
-  tempData :any=[]
+  tempData: any = []
   show = true;
   selectedDay: any;
   notifyObj = new Notifier();
+  facilityId:string='';
   constructor() { }
 
   ngOnInit(): void {
@@ -8093,7 +8094,7 @@ export class DashboardComponent implements OnInit {
       paidAmount: "4,992.85 ",
       dateClosed: "11/2/22"
     },
-    ,
+      ,
     {
       date: "10/17/21",
       masterAcct: "Atkinson Sheep Ranch",
@@ -8186,12 +8187,16 @@ export class DashboardComponent implements OnInit {
     this.closedClaims = this.claims;
   }
 
-  yearrange(event:any){
+  facilityChange(facilityId: string) {
+    this.facilityId = facilityId;
+  }
+
+  yearrange(event: any) {
     this.selectedDay = {
       value: event.value,
       text: event.source.triggerValue
     };
-    this.claims = [].concat(this.tempData.filter((x:any) =>{
+    this.claims = [].concat(this.tempData.filter((x: any) => {
       let event12 = new Date(x.date);
       if (event12.getFullYear() == this.selectedDay.text) {
         return true;
@@ -8203,13 +8208,13 @@ export class DashboardComponent implements OnInit {
   }
   selectedData(e: any) {
     this.selectedDataItems = e;
-    this.navOptions = 'addClaim';    
+    this.navOptions = 'addClaim';
   }
   getYear(e: any) {
     this.show = false;
     this.years = Number(e.value);
     this.ngOnInit();
-    
+
     setTimeout(() => {
       this.claims = this.claims.filter((data: any) => {
         let event = new Date(data.date);
@@ -8218,7 +8223,7 @@ export class DashboardComponent implements OnInit {
         } else {
           return false;
         }
-  
+
       })
       this.initFilter();
       this.show = true
@@ -8226,5 +8231,5 @@ export class DashboardComponent implements OnInit {
   }
 }
 export class Notifier {
-  valueChanged: (data:any) => void = (data:any) => { };    
+  valueChanged: (data: any) => void = (data: any) => { };
 }
