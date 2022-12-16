@@ -56,7 +56,6 @@ export class ClaimsDetailsComponent implements OnInit, OnDestroy {
                             { "name": "LPN", props: "LPN" },
                             { "name": "NET", props: "NET" }];
 
-    this.costDetails.controls['cost'].disable();
   }
 
   initializeForm() {
@@ -114,19 +113,19 @@ export class ClaimsDetailsComponent implements OnInit, OnDestroy {
     this.claimsUpdatedData.create_date = this.formatDate(this.firstFormGroup.value.createdDate);
     this.claimsUpdatedData.closed_date = this.formatDate(this.firstFormGroup.value.closedDate)
 
-    this.sendBackEditData(this.firstFormGroup.value);
+    this.sendBackEditData(this.firstFormGroup.value, this.costDetails.value);
     this.dialogRef.close({data: this.sendEditDataModel});
 
   }
 
-  sendBackEditData(firstFormGroup: any) {
+  sendBackEditData(firstFormGroup: any, costDetails: any) {
     this.sendEditDataModel = {};
     this.sendEditDataModel._id = this.data.rowData._id;
     this.sendEditDataModel.claimId = this.data.rowData.claimId;
     this.sendEditDataModel.facilityId = firstFormGroup.facility;
     this.sendEditDataModel.palletQuantity = this.data.rowData.palletQuantity;
     this.sendEditDataModel.documentType = this.data.rowData.documentType;
-    this.sendEditDataModel.claimedAmount = this.data.rowData.claimedAmount;
+    this.sendEditDataModel.claimedAmount = costDetails.cost;
     this.sendEditDataModel.serviceProviderClaimId = this.data.rowData.serviceProviderClaimId;
     this.sendEditDataModel.claimStatus = firstFormGroup.status;
     this.sendEditDataModel.claimType = firstFormGroup.claimType;
