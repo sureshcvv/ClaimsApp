@@ -1,4 +1,4 @@
-package com.miracle.claims.entity;
+package com.miracle.claims.beans;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;

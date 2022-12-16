@@ -1,10 +1,11 @@
 package com.miracle.claims.service;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.http.ResponseEntity;
 
-import com.miracle.claims.entity.Claim;
+import com.miracle.claims.beans.Claim;
 
 public interface ClaimsService {
 	
@@ -29,7 +30,7 @@ public interface ClaimsService {
 	
 	public Claim getCustomerClaim(String claimId);
 	public Claim getClaimByCreator(String creatorId);
-	public ResponseEntity<List<Claim>> getClaimsByCreateDate(String createDate);
+	public ResponseEntity<List<Claim>> getClaimsByCreateDate(Date createDate);
 	public ResponseEntity<List<Claim>> getClaimsByClosedDate(String closedDate);
 
 //	public ResponseEntity<List<Claim>> getClaimsByClaimedAmountAndStatus(String claimedAmount, String claimStatus);

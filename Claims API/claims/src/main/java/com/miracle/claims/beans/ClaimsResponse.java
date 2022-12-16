@@ -1,4 +1,4 @@
-package com.miracle.claims.entity;
+package com.miracle.claims.beans;
 
 public class ClaimsResponse {
 	private int id;

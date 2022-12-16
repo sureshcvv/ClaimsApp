@@ -13,10 +13,7 @@ import org.springframework.data.mongodb.repository.config.EnableMongoRepositorie
 public class ClaimsApplication {
 
 	public static void main(String[] args) {
-		System.out.println("claims application starting...");
 		SpringApplication.run(ClaimsApplication.class, args);
-
-		System.out.println("claims application started, yay!!!");
 		
 	}
 
