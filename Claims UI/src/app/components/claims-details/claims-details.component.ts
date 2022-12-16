@@ -62,7 +62,7 @@ export class ClaimsDetailsComponent implements OnInit, OnDestroy {
     this.firstFormGroup = this._formBuilder.group({
       createdDate: [new Date(this.data.rowData.creationDate), Validators.required],
       closedDate: [new Date(this.data.rowData.dateClosed), Validators.required],
-      customerClaim: [this.claimData.serviceProviderClaimId],
+      customerClaim: [this.data.rowData.serviceProviderClaimId],
       customer: ['', Validators.required],
       facility: [this.data.rowData.facilityId, Validators.required],
       wmsAccount: ['', Validators.required],
@@ -126,7 +126,7 @@ export class ClaimsDetailsComponent implements OnInit, OnDestroy {
     this.sendEditDataModel.palletQuantity = this.data.rowData.palletQuantity;
     this.sendEditDataModel.documentType = this.data.rowData.documentType;
     this.sendEditDataModel.claimedAmount = costDetails.cost;
-    this.sendEditDataModel.serviceProviderClaimId = this.data.rowData.serviceProviderClaimId;
+    this.sendEditDataModel.serviceProviderClaimId = firstFormGroup.customerClaim;
     this.sendEditDataModel.claimStatus = firstFormGroup.status;
     this.sendEditDataModel.claimType = firstFormGroup.claimType;
     this.sendEditDataModel.lastUpdateId = this.data.rowData.lastUpdateId;
