@@ -20,55 +20,119 @@
 </mat-grid-list>  -->
 
 <mat-list>
-    <mat-list-item class="list-group-item-primary">
-        <span matListItemLine>Claim ID : {{claimData['claimId']}}</span>
-        <!-- <span matListItemLine></span> -->
-    </mat-list-item>
-    <mat-divider></mat-divider>
-    <mat-list-item>
-        <span matListItemLine>Facility ID : {{claimData['facilityId']}} </span>
-        <!-- <span matListItemLine></span> -->
-    </mat-list-item>
-    <mat-divider></mat-divider>
-    <mat-list-item>
+        <mat-list-item class="list-group-item-primary">
+            <mat-icon style="margin-right: 10px; color: white;">business</mat-icon>
+            <span matListItemTitle>Claim ID : {{claimData['claimId']}} </span>
+            <!-- <span matListItemLine></span> -->
+        </mat-list-item>
+        <mat-divider></mat-divider>
 
-        <!-- <span matListItemTitle > </span> -->
-        <span matListItemLine>Pallet Quantity : {{claimData['palletQuantity']}}</span>
-    </mat-list-item>
-    <mat-divider></mat-divider>
-    <mat-list-item>
+        <mat-list-item>
+            <mat-icon color="primary" style="margin-right: 10px;">supervisor_account</mat-icon>
+            <span matListItemLine>Master Account : Lamb Weston </span>
+            <!-- <span matListItemLine></span> -->
+        </mat-list-item>
+        <mat-divider></mat-divider>
 
-        <!-- <span matListItemTitle></span> -->
-        <span matListItemLine>Document Type : {{claimData['documentType']}}</span>
-    </mat-list-item>
-    <mat-divider></mat-divider>
-    <mat-list-item class="list-group-item-primary">
-        <!-- <span matListItemTitle></span> -->
-        <mat-icon style="margin-right: 10px; color: white;"> attach_money</mat-icon>
-        <span matListItemLine>Claimed Amount : {{claimData['claimedAmount']}}</span>
-    </mat-list-item>
-    <mat-divider></mat-divider>
-    <mat-list-item>
-        <!-- <span matListItemTitle></span> -->
-        <span matListItemLine>Service Provider Claim ID :  {{claimData['serviceProviderClaimId']}}</span>
-    </mat-list-item>
-    <mat-divider></mat-divider>
-    <mat-list-item class="list-group-item-primary">
-        <!-- <span matListItemTitle></span> -->
-        <span matListItemLine>Claim Status : {{claimData['claimStatus']}}</span>
-    </mat-list-item>
-    <mat-divider></mat-divider>
-    <mat-list-item>
-        <span matListItemLine>Claim Type : {{claimData['claimType']}} </span>
-        <!-- <span matListItemLine></span> -->
-    </mat-list-item>
-    <mat-divider></mat-divider>
-    <mat-list-item class="list-group-item-primary">
-        <!-- <span matListItemTitle></span> -->
-        <span matListItemLine>Creation Date : {{claimData['creationDate']}}</span>
-    </mat-list-item>
+        <mat-list-item class="list-group-item-primary"> 
+            <!-- <span matListItemTitle > </span> -->
+            <mat-icon style="margin-right: 10px; color: white;">account_box</mat-icon>
+            <span matListItemLine>Account : LAMB WESTON SALES 54357 (54357)</span>
+        </mat-list-item>
+        <mat-divider></mat-divider>
 
-</mat-list>
+        <mat-list-item>
+            <mat-icon color="primary" style="margin-right: 10px;">account_tree</mat-icon>
+            <span matListItemLine>Facility ID : {{claimData['facilityId']}} </span>
+            <!-- <span matListItemLine></span> -->
+        </mat-list-item>
+        <mat-divider></mat-divider>
+ 
+        <mat-list-item class="list-group-item-primary"> 
+            <!-- <span matListItemTitle > </span> -->
+            <mat-icon style="margin-right: 10px; color: white;">scale</mat-icon>
+            <span matListItemLine>Pallet Quantity : {{claimData['palletQuantity']}}</span>
+        </mat-list-item>
+        <mat-divider></mat-divider>
+
+        <mat-list-item>
+           <mat-icon color="primary" style="margin-right: 10px;">article</mat-icon>
+            <!-- <span matListItemTitle></span> -->
+            <span matListItemLine>Document Type : {{claimData['documentType']}}</span>
+        </mat-list-item>
+        <mat-divider></mat-divider>
+
+        <mat-list-item class="list-group-item-primary">
+            <!-- <span matListItemTitle></span> -->
+            <mat-icon style="margin-right: 10px; color: white;"> monetization_on</mat-icon>
+            <span matListItemLine>Claimed Amount : {{claimData['claimedAmount']}}</span>
+        </mat-list-item>
+        <mat-divider></mat-divider>
+
+        <mat-list-item>
+            <!-- <span matListItemTitle></span> -->
+            <mat-icon color="primary" style="margin-right: 10px;"> attach_money</mat-icon>
+            <span matListItemLine>Paid Amount : 878.15</span>
+        </mat-list-item>
+        <mat-divider></mat-divider>
+
+        <mat-list-item class="list-group-item-primary">
+            <!-- <span matListItemTitle></span> -->
+            <mat-icon color="primary" style="margin-right: 10px;">numbers</mat-icon>
+            <span matListItemLine>Service Provider Claim ID :  {{claimData['serviceProviderClaimId']}}</span>
+        </mat-list-item>
+        <mat-divider></mat-divider>
+
+        <mat-list-item>
+            <!-- <span matListItemTitle></span> -->
+            <mat-icon color="primary" style="margin-right: 10px;">check_circle</mat-icon>
+            <span matListItemLine>Claim Status : {{claimData['claimStatus']}}</span>
+        </mat-list-item>
+        <mat-divider></mat-divider>
+
+        <mat-list-item class="list-group-item-primary">
+            <!-- <span matListItemTitle></span> -->
+            <mat-icon style="margin-right: 10px; color: white;"> category</mat-icon>
+            <span matListItemLine>Catagory : Damage</span>
+        </mat-list-item>
+        <mat-divider></mat-divider>
+
+        <mat-list-item >
+           <mat-icon color="primary" style="margin-right: 10px;">emoji_transportation</mat-icon>
+            <span matListItemLine>Claim Type : {{claimData['claimType']}} </span>
+            <!-- <span matListItemLine></span> -->
+        </mat-list-item> 
+        <mat-divider></mat-divider>
+
+        <mat-list-item class="list-group-item-primary">
+            <!-- <span matListItemTitle></span> -->
+            <mat-icon style="margin-right: 10px; color: white;"> date_range</mat-icon>
+            <span matListItemLine>Creation Date : 10/17/22</span>
+        </mat-list-item> 
+        <mat-divider></mat-divider>
+
+        <mat-list-item >
+            <mat-icon color="primary" style="margin-right: 10px;"> calendar_today</mat-icon>
+            <span matListItemLine>Closed Date: 10/28/22 </span>
+            <!-- <span matListItemLine></span> -->
+        </mat-list-item> 
+        <mat-divider></mat-divider>
+
+        <mat-list-item class="list-group-item-primary">
+            <!-- <span matListItemTitle></span> -->
+            <mat-icon style="margin-right: 10px; color: white;">local_shipping</mat-icon>
+            <span matListItemLine>Carrier : {{claimData['carrier']}}</span>
+        </mat-list-item> 
+        <mat-divider></mat-divider>
+
+        <mat-list-item >
+            <mat-icon color="primary" style="margin-right: 10px;">123</mat-icon>
+            <span matListItemLine>Load Number: {{claimData['loadNumber']}} </span>
+            <!-- <span matListItemLine></span> -->
+        </mat-list-item> 
+        <mat-divider></mat-divider>
+    
+     </mat-list>
 
 
 
