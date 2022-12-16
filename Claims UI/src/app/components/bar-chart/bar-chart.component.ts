@@ -95,14 +95,15 @@ export class BarChartComponent implements OnInit {
 
       });
     } else {
-      this.ngOnInit();
+      this.loadBarchart();
     }
 
   }
 
-  ngOnInit(): void {
+  loadBarchart() {
     this.barchartFlag = false;
-
+    this.barChartData[0].data = [];
+    this.barChartLabels = [];
     this.http.getClaims().subscribe((data: any) => {
 
       let amount: any = [];
@@ -121,6 +122,10 @@ export class BarChartComponent implements OnInit {
       this.barchartFlag = true;
 
     })
+  }
+
+  ngOnInit(): void {
+    this.facilityCheck();
   }
 
 }

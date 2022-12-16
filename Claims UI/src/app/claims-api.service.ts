@@ -83,7 +83,7 @@ export class ClaimsApiService {
   }
 
   getCustomer() {
-    return this.http.get(environment.URL + `/customer`);
+    return this.http.get(`http://localhost:8400/customer`);
 
   }
   getCustomerReference() {
