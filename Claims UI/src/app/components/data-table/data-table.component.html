@@ -181,7 +181,7 @@
             <ngx-datatable-column *ngFor="let col of filteredColumns" [name]="col.name" [prop]="col.props">
             </ngx-datatable-column>
             <ngx-datatable-column *ngIf="showActions" [frozenRight]="true" name="Actions" [resizeable]="false" [sortable]="false" [draggable]="false" [canAutoResize]="true">
-                <ng-template let-row="row" ngx-datatable-cell-template>
+                <ng-template let-row="row"  let-rowIndex="rowIndex" ngx-datatable-cell-template>
                     <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Menu">
                         <mat-icon color="primary">checklist</mat-icon> Actions
                     </button>
@@ -190,11 +190,11 @@
                             <mat-icon>feed</mat-icon>
                             <span>More Information</span>
                         </button>
-                        <button mat-menu-item (click)="editItem(row)" *ngIf="tableType == 'claim'">
+                        <button mat-menu-item (click)="editItem(row, rowIndex)" *ngIf="tableType == 'claim'">
                             <mat-icon>edit</mat-icon>
                             <span>Edit Information</span>
                         </button>
-                        <button mat-menu-item (click)="editItem(row)" *ngIf="tableType == 'order'">
+                        <button mat-menu-item (click)="editItem(row, rowIndex)" *ngIf="tableType == 'order'">
                             <mat-icon>add</mat-icon>
                             <span>Add to Claim</span>
                         </button>
