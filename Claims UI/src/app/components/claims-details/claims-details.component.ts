@@ -46,7 +46,6 @@ export class ClaimsDetailsComponent implements OnInit, OnDestroy {
     // this.customerList = this.http.getCustomer();
     setTimeout(() => {
       this.ordersList = this.data.orders;
-
     }, 500)
     this.filteredColumns = [{ "name": "Item", "props": "item", width: 60 }, 
                             { "name": "Description", props: "des" }, 
@@ -108,14 +107,31 @@ export class ClaimsDetailsComponent implements OnInit, OnDestroy {
   }
 
   saveClaimDetails() {
-
-    this.claimsUpdatedData = new Claim();
-    this.claimsUpdatedData.create_date = this.formatDate(this.firstFormGroup.value.createdDate);
-    this.claimsUpdatedData.closed_date = this.formatDate(this.firstFormGroup.value.closedDate)
-
+    this.editServiceCall(this.firstFormGroup.value, this.costDetails.value);
+    this.http.updateClaim(this.claimsUpdatedData, this.data.rowData.serviceProviderClaimId).subscribe(data=>{
+      location.reload();
+    });
     this.sendBackEditData(this.firstFormGroup.value, this.costDetails.value);
     this.dialogRef.close({data: this.sendEditDataModel});
+  }
 
+  editServiceCall(firstFormGroup: any, costDetails: any) {
+    this.claimsUpdatedData = new Claim();
+    this.claimsUpdatedData._id = this.data.rowData._id;
+    this.claimsUpdatedData.create_date = this.formatDate(firstFormGroup.createdDate);
+    this.claimsUpdatedData.closed_date = this.formatDate(firstFormGroup.closedDate);
+    this.claimsUpdatedData.claim_id= this.data.rowData.claimId;
+    this.claimsUpdatedData.facility_id = firstFormGroup.facility;
+    this.claimsUpdatedData.pallet_quantity = this.data.rowData.palletQuantity;
+    this.claimsUpdatedData.document_type = this.data.rowData.documentType;
+    this.claimsUpdatedData.claimed_amount = costDetails.cost;
+    this.claimsUpdatedData.service_provider_claim_id = firstFormGroup.customerClaim;
+    this.claimsUpdatedData.claim_status = firstFormGroup.status;
+    this.claimsUpdatedData.claim_type = firstFormGroup.claimType.toUpperCase();
+    this.claimsUpdatedData.creator_id = '';
+    this.claimsUpdatedData.last_update_id = this.data.rowData.lastUpdateId;
+    this.claimsUpdatedData.last_update_date = this.data.rowData.lastUpdateDate;
+    return this.claimsUpdatedData;
   }
 
   sendBackEditData(firstFormGroup: any, costDetails: any) {

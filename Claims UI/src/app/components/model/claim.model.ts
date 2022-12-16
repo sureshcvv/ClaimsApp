@@ -13,4 +13,5 @@ export class  Claim {
     closed_date: string;
     create_date: string;
     last_update_date: string;
+    _id: string;
 }
