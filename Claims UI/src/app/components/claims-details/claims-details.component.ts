@@ -1,4 +1,3 @@
-import { ClaimEditModel } from './../model/claim-table-edit.model';
 import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
@@ -28,7 +27,7 @@ export class ClaimsDetailsComponent implements OnInit, OnDestroy {
   claimsUpdatedData!: Claim;
   sendEditDataModel!: any;
 
-  facilityList: string[] = [];
+  facilityList: any = [];
   customerList: string[] = [];
 
   constructor(public dialogRef: MatDialogRef<ClaimsDetailsComponent>,
@@ -43,6 +42,7 @@ export class ClaimsDetailsComponent implements OnInit, OnDestroy {
     this.http.getFacility().subscribe((data: any) => {
       this.facilityList = data;
     });
+
     // this.customerList = this.http.getCustomer();
     setTimeout(() => {
       this.ordersList = this.data.orders;

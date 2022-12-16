@@ -122,7 +122,7 @@ export class DataTableComponent implements OnInit {
 	filteredObject: any;
 	filteredRowsAutoFill: any = {};
 	storedRows:any=[];
-	constructor(public dialog: MatDialog, private http: ClaimsApiService) {
+	constructor(public dialog: MatDialog, private http: ClaimsApiService, private cd: ChangeDetectorRef) {
 	}
 	ngOnInit(): void {
 		this.filteredColumns = this.columns.filter(column => column.show === true);

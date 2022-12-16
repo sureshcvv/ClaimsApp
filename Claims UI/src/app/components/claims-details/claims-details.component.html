@@ -35,7 +35,7 @@
                     <mat-form-field appearance="fill">
                         <mat-label>Facility</mat-label>
                         <select matNativeControl formControlName="facility" placeholder="Facility" required>
-                <option *ngFor="let item of facilityList" value={{item}}>{{item}}</option>
+                <option *ngFor="let item of facilityList" value={{item.facilityId}}>{{item.facilityName}}</option>
                 <!-- <option value="Transportation">Transportation</option> -->
               </select>
                     </mat-form-field>
