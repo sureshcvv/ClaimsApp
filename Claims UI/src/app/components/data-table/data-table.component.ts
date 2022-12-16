@@ -7,6 +7,7 @@ import { ViewEncapsulation } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { ClaimsDetailsComponent } from '../claims-details/claims-details.component';
 import { ClaimsApiService } from 'src/app/claims-api.service';
+import { zip } from 'rxjs';
 
 const today = new Date();
 const month = today.getMonth();
@@ -21,6 +22,13 @@ export class DataTableComponent implements OnInit {
 	@Input() rows: any[] = [];
 	@Output() newItemEvent: any = new EventEmitter();
 	@Input() showActions: boolean = true;
+	@Input() set facilityId(id: string) {
+		this.facilityChange = id;
+		// this.facilityCheck();
+		this.ngOnInit();
+	};
+	showGrid = true;
+	facilityChange: string = '';
 	sortingfilters = false;
 	campaignOne = new FormGroup({
 		start: new FormControl(),
@@ -85,7 +93,7 @@ export class DataTableComponent implements OnInit {
 	}, {
 		name: "Claimed Amount",
 		props: "claimedAmount",
-		type: "number",
+		type: "text",
 		show: false
 	},
 	{
@@ -119,35 +127,41 @@ export class DataTableComponent implements OnInit {
 	filteredRows: any[] = [];
 	filteredObject: any;
 	filteredRowsAutoFill: any = {};
-	storedRows:any=[];
+	storedRows: any = [];
 	constructor(public dialog: MatDialog, private http: ClaimsApiService) {
 	}
 	ngOnInit(): void {
+		this.showGrid = false;
 		this.filteredColumns = this.columns.filter(column => column.show === true);
-		this.http.getClaims().subscribe((data: any) => {
+		this.http.getClaimByFacility(this.facilityChange).subscribe((data: any) => {
 			// this.rows = data;
+			if (data.length > 0) {
+				data = data.reverse();
+
+			}
 			this.storedRows = data.map((item: any, index: number) => {
 				if (!item.creationDate) {
 					item.creationDate = this.rows[index].date
 				}
 				item.claimedAmount = Number(item.claimedAmount ? item.claimedAmount : 0);
 
-				return { ...item, ...this.rows[index] }
+				return { ...this.rows[index], ...item }
 			});
 			this.filteredRows = data.map((item: any, index: number) => {
 				if (!item.creationDate) {
 					item.creationDate = this.rows[index].date
 				}
-				item.claimedAmount = Number(item.claimedAmount ? item.claimedAmount : 0);
+				item.claimedAmount = '$' + Number(item.claimedAmount ? item.claimedAmount : 0);
 
-				return { ...item, ...this.rows[index] }
+				return { ...this.rows[index], ...item }
 			});
+			this.showGrid = true;
 
 		})
 		this.filteredRowsAutoFill = this.columns.map((item: any) => item.props);
 		this.campaignOne.valueChanges.subscribe(data => {
 			if (data.start && data.end) {
-				this.filteredRows = this.storedRows.filter((item:any) => {
+				this.filteredRows = this.storedRows.filter((item: any) => {
 
 					let dateCheck = new Date(item.creationDate);
 
@@ -155,7 +169,7 @@ export class DataTableComponent implements OnInit {
 					let highDate = new Date(data.end);
 					console.log(highDate.getTime());
 
-					if(dateCheck.getTime() <= highDate.getTime() && dateCheck.getTime() >= lowDate.getTime()){
+					if (dateCheck.getTime() <= highDate.getTime() && dateCheck.getTime() >= lowDate.getTime()) {
 						return true;
 					} else return false;
 				})
@@ -175,7 +189,8 @@ export class DataTableComponent implements OnInit {
 		XLSX.writeFile(wb, 'claims.xlsx');
 	}
 	openDialog(row: any) {
-		const dialogRef = this.dialog.open(DetailsModalComponent, { data: row, autoFocus: false });
+		const dialogRef = this.dialog.open(DetailsModalComponent, { height: '600px',
+		width: '1000px',  data: row, autoFocus: false });
 
 		dialogRef.afterClosed().subscribe(result => {
 			console.log(`Dialog result: ${result}`);
@@ -202,6 +217,14 @@ export class DataTableComponent implements OnInit {
 			}
 		}
 	}
+	
+	resetValue = new FormControl();
+	resetFilterApplied(){
+     	 this.filtersOption = {};
+	 this.resetValue.reset();
+	 this.filteredRows = this.storedRows;
+
+     }
 }
 
 @Component({
@@ -219,6 +242,8 @@ export class DataTableOrdersComponent implements OnInit {
 		start: new FormControl(),
 		end: new FormControl(),
 	});
+	showGrid = true;
+
 	campaignTwo = new FormGroup({
 		start: new FormControl(),
 		end: new FormControl(),
@@ -301,9 +326,11 @@ export class DataTableOrdersComponent implements OnInit {
 	ngOnInit(): void {
 		this.filteredColumns = this.columns.filter(column => column.show === true);
 		this.filteredRows = this.rows;
-		this.facilityList = this.http.getFacility();
+		let source$ = zip(this.http.getFacility());
+		source$.subscribe(([facility]) => {
+			this.facilityList = facility;
+		})
 		this.customerList = this.http.getCustomer();
-		console.log(this.facilityList, this.customerList);
 	}
 	public togglecolumnCheckbox(column: any) {
 		const isChecked = column.show;
@@ -318,7 +345,8 @@ export class DataTableOrdersComponent implements OnInit {
 		XLSX.writeFile(wb, 'claims.xlsx');
 	}
 	openDialog(row: any) {
-		const dialogRef = this.dialog.open(DetailsModalComponent, { data: row, autoFocus: false });
+		const dialogRef = this.dialog.open(DetailsModalComponent, { height: '400px',
+		width: '600px',  data: row, autoFocus: false });
 
 		dialogRef.afterClosed().subscribe(result => {
 			console.log(`Dialog result: ${result}`);
@@ -326,7 +354,7 @@ export class DataTableOrdersComponent implements OnInit {
 	}
 	editItem(row: any) {
 		this.addedClaims.push(row);
-		this.newItemEvent.emit(this.addedClaims);
+		this.newItemEvent.emit({ row: this.addedClaims, formValues: this.filteredObject.value });
 		// const dialogRef = this.dialog.open(ClaimsDetailsComponent, { data: { orders: this.http.getOrders() }, autoFocus: false });
 
 		// dialogRef.afterClosed().subscribe(result => {
@@ -345,4 +373,12 @@ export class DataTableOrdersComponent implements OnInit {
 			}
 		}
 	}
+	
+	resetValue = new FormControl();
+	resetFilterApplied(){
+         this.filtersOption = {};
+	 this.resetValue.reset();
+	 this.filteredRows = this.rows;
+
+    }
 }

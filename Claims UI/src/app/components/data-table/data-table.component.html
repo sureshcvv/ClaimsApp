@@ -6,7 +6,7 @@
     </mat-card-subtitle>
 </mat-card-header>
 <br/>
-<div *ngIf="rows.length > 0" fxFlexFill fxLayout="column">
+<div *ngIf="rows.length > 0 && showGrid" fxFlexFill fxLayout="column">
     <div fxFlex fxLayoutAlign="end start" fxLayoutGap="20px">
         <div>
             <button mat-stroked-button color="primary" mat-button (click)="sortingfilters = !sortingfilters">
@@ -37,7 +37,7 @@
         <span *ngFor="let item of filteredColumns">
             <span *ngIf="item.show && item.name == 'Category'">
                 <mat-form-field appearance="outline" color="primary">
-                    <select matNativeControl placeholder="Claim Category" (change)="filteredApplied($event,item.props)">
+                    <select matNativeControl placeholder="Claim Category" (change)="filteredApplied($event,item.props)" [formControl]="resetValue">
                         <option value="Damage">Damage</option>
                         <option value="Shortage">Shortage</option>
                         <option value="Detention">Detention</option>
@@ -55,7 +55,7 @@
 
         <span *ngIf="item.show && item.name == 'Claim Type'">
                 <mat-form-field appearance="outline">
-                    <select matNativeControl placeholder="Claim Type" (change)="filteredApplied($event,item.props)">
+                    <select matNativeControl placeholder="Claim Type" (change)="filteredApplied($event,item.props)" [formControl]="resetValue">
                         <option value="WAREHOUSE">Warehouse</option>
                         <option value="TRANSPORTATION">Transportation</option>
                     </select>
@@ -68,7 +68,7 @@
                 <mat-form-field appearance="outline">
                     <mat-label>{{item.name}}</mat-label>
                     <input matInput type={{item.type}} placeholder={{item.name}}
-                        (keyup)="filteredApplied($event,item.props)" />
+                        (keyup)="filteredApplied($event,item.props)" [formControl]="resetValue"/>
                 </mat-form-field>
                 &nbsp;
             </span>
@@ -78,7 +78,7 @@
     </mat-card>
 
     <mat-card *ngIf="sortingfilters && tableType == 'order'">
-        <form [formGroup]="filteredObject" fxFlexFill fxLayoutGap="40px" fxLayout="row">
+        <form [formGroup]="filteredObject">
             <mat-form-field appearance="outline">
                 <mat-label>Date Created Range</mat-label>
                 <mat-date-range-input [formGroup]="campaignTwo" [rangePicker]="campaignTwoPicker" [comparisonStart]="campaignOne.value.start" [comparisonEnd]="campaignOne.value.end">
@@ -93,8 +93,8 @@
                 <mat-label>Facility</mat-label>
                 <input type="text" placeholder="Pick one" formControlName="facility" aria-label="Number" matInput [matAutocomplete]="auto">
                 <mat-autocomplete #auto="matAutocomplete">
-                    <mat-option *ngFor="let option of facilityList" [value]="option">
-                        {{option}}
+                    <mat-option *ngFor="let option of facilityList" [value]="option.facilityName">
+                        {{option.facilityName}}
                     </mat-option>
                 </mat-autocomplete>
             </mat-form-field>
@@ -109,8 +109,8 @@
             </mat-form-field>
             <mat-form-field appearance="outline">
                 <mat-label>Customer Reference Number</mat-label>
-                <input type="text" placeholder="Pick one" formControlName="customer" aria-label="Number" matInput [matAutocomplete]="auto">
-                <mat-autocomplete #auto="matAutocomplete">
+                <input type="text" placeholder="Pick one" formControlName="customer" aria-label="Number" matInput [matAutocomplete]="auto2">
+                <mat-autocomplete #auto2="matAutocomplete">
                     <mat-option *ngFor="let option of customerList" [value]="option">
                         {{option}}
                     </mat-option>
@@ -118,8 +118,8 @@
             </mat-form-field>
             <mat-form-field appearance="outline">
                 <mat-label>AMC Reference Number</mat-label>
-                <input type="text" placeholder="Pick one" formControlName="customer" aria-label="Number" matInput [matAutocomplete]="auto">
-                <mat-autocomplete #auto="matAutocomplete">
+                <input type="text" placeholder="Pick one" formControlName="customer" aria-label="Number" matInput [matAutocomplete]="auto3">
+                <mat-autocomplete #auto3="matAutocomplete">
                     <mat-option *ngFor="let option of customerList" [value]="option">
                         {{option}}
                     </mat-option>
@@ -154,8 +154,8 @@
                             [rangePicker]="campaignOnePicker"
                                 [comparisonStart]="campaignTwo.value.start"
                                 [comparisonEnd]="campaignTwo.value.end">
-                                <input matStartDate placeholder="Start date" formControlName="start">
-                            <input matEndDate placeholder="End date" formControlName="end">
+                                <input matStartDate placeholder="Start date" formControlName="start" [formControl]="resetValue">
+                            <input matEndDate placeholder="End date" formControlName="end" [formControl]="resetValue">
                         </mat-date-range-input>
                             <mat-hint>MM/DD/YYYY – MM/DD/YYYY</mat-hint>
                         <mat-datepicker-toggle matSuffix [for]="campaignOnePicker"></mat-datepicker-toggle>
@@ -165,14 +165,16 @@
         <mat-form-field appearance="outline" *ngIf="item.show && item.name == 'Date Closed'">
             <mat-label>Date Closed Range</mat-label>
             <mat-date-range-input [formGroup]="campaignTwo" [rangePicker]="campaignTwoPicker" [comparisonStart]="campaignOne.value.start" [comparisonEnd]="campaignOne.value.end">
-                <input matStartDate placeholder="Start date" formControlName="start">
-                <input matEndDate placeholder="End date" formControlName="end">
+                <input matStartDate placeholder="Start date" formControlName="start" [formControl]="resetValue">
+                <input matEndDate placeholder="End date" formControlName="end" [formControl]="resetValue">
             </mat-date-range-input>
             <mat-datepicker-toggle matSuffix [for]="campaignTwoPicker"></mat-datepicker-toggle>
             <mat-hint>MM/DD/YYYY – MM/DD/YYYY</mat-hint>
             <mat-date-range-picker #campaignTwoPicker></mat-date-range-picker>
         </mat-form-field>
         </span>
+        
+        <button mat-raised-button color="primary" class="float-end reset" (click)="resetFilterApplied()"> RESET </button>
     </mat-card>
     <br />
     <div id="print-section">

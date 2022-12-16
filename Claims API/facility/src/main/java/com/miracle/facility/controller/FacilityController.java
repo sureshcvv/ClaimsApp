@@ -28,7 +28,11 @@ import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 
 @RestController
+<<<<<<< HEAD
 @CrossOrigin(origins="https://app-test-demo.vercel.app")
+=======
+@CrossOrigin(origins="http://localhost:4200")
+>>>>>>> develop
 public class FacilityController {
 
 	@Autowired

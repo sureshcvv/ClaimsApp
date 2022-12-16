@@ -8,16 +8,16 @@
                 <mat-card-subtitle><b>Total Facilities</b></mat-card-subtitle>
                 <mat-card-title>{{ facilities.length }}</mat-card-title>
             </mat-card-header>
-    <mat-form-field>
-      <mat-label>Select Facility</mat-label>
-      <mat-select (selectionChange)="changeFacility($event)">
-        <mat-option>None</mat-option>
-        <mat-option *ngFor="let Wearhouse of facilities" [value]="Wearhouse"  >
-          {{Wearhouse}}
-        </mat-option>
-       
-      </mat-select>
-    </mat-form-field>
+            <mat-form-field>
+                <mat-label>Select Facility</mat-label>
+                <mat-select (selectionChange)="changeFacility($event)">
+                    <mat-option>None</mat-option>
+                    <mat-option *ngFor="let Wearhouse of facilities" [value]="Wearhouse.facilityId">
+                        {{Wearhouse.facilityName}}
+                    </mat-option>
+
+                </mat-select>
+            </mat-form-field>
         </mat-card>
         <mat-card fxFlex="20%">
             <mat-card-header>
@@ -35,10 +35,9 @@
                     <mat-icon class="claim main-icon">content_copy</mat-icon>
                 </div>
                 <mat-card-subtitle><b>Total Claims</b></mat-card-subtitle>
-                 <mat-card-title *ngIf="this.rowData.length && !(this.masterData.length)">{{rowData.length }}</mat-card-title> 
-                <mat-card-title *ngIf="this.masterData.length">{{this.masterData.length }}</mat-card-title>
+                <mat-card-title>{{ claims }}</mat-card-title>
             </mat-card-header>
-    
+
         </mat-card>
         <mat-card fxFlex="20%">
             <mat-card-header>
@@ -48,7 +47,7 @@
                 <mat-card-subtitle><b>Claim Amount</b></mat-card-subtitle>
                 <mat-card-title>${{ claimAmount | number : '1.2-2'}}</mat-card-title>
             </mat-card-header>
-    
+
         </mat-card>
         <mat-card fxFlex="20%">
             <mat-card-header>
@@ -60,4 +59,4 @@
             </mat-card-header>
         </mat-card>
     </div>
-    </div>
+</div>
