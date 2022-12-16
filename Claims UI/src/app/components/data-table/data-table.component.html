@@ -6,7 +6,7 @@
     </mat-card-subtitle>
 </mat-card-header>
 <br/>
-<div *ngIf="rows.length > 0" fxFlexFill fxLayout="column">
+<div *ngIf="rows.length > 0 && showGrid" fxFlexFill fxLayout="column">
     <div fxFlex fxLayoutAlign="end start" fxLayoutGap="20px">
         <div>
             <button mat-stroked-button color="primary" mat-button (click)="sortingfilters = !sortingfilters">

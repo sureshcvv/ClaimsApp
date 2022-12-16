@@ -20,10 +20,11 @@ export class DashboardComponent implements OnInit {
   public openSize = 3000;
   public closedSize = 50000;
   selectedDataItems = [];
-  tempData :any=[]
+  tempData: any = []
   show = true;
   selectedDay: any;
   notifyObj = new Notifier();
+  facilityId:string='';
   constructor() { }
 
   ngOnInit(): void {
@@ -8093,7 +8094,7 @@ export class DashboardComponent implements OnInit {
       paidAmount: "4,992.85 ",
       dateClosed: "11/2/22"
     },
-    ,
+      ,
     {
       date: "10/17/21",
       masterAcct: "Atkinson Sheep Ranch",
@@ -8169,12 +8170,12 @@ export class DashboardComponent implements OnInit {
     this.openClaims.forEach((elem: any) => {
       elem.claimedAmount = +elem.claimedAmount.toString().substring(1).replace(',', '');
     })
-    this.openClaims = this.openClaims.sort((a: any, b: any) => b.claimedAmount - a.claimedAmount).slice(0, 5);
+    this.openClaims = this.openClaims.sort((a: any, b: any) => b.claimedAmount - a.claimedAmount);
     this.closedClaims = this.claims.filter((claim: any) => claim.status === 'Closed');
     this.closedClaims.forEach((elem: any) => {
       elem.claimedAmount = +elem.claimedAmount.toString().substring(1).replace(',', '');
     })
-    this.closedClaims = this.closedClaims.sort((a: any, b: any) => b.claimedAmount - a.claimedAmount).slice(0, 5);
+    this.closedClaims = this.closedClaims.sort((a: any, b: any) => b.claimedAmount - a.claimedAmount);
     this.claims.forEach((element: any) => {
       if (this.statusData.hasOwnProperty(element.status)) {
         this.statusData[element.status] += 1;
@@ -8182,14 +8183,20 @@ export class DashboardComponent implements OnInit {
         this.statusData[element.status] = 1;
       }
     })
+    this.openClaims = this.claims;
+    this.closedClaims = this.claims;
   }
 
-  yearrange(event:any){
+  facilityChange(facilityId: string) {
+    this.facilityId = facilityId;
+  }
+
+  yearrange(event: any) {
     this.selectedDay = {
       value: event.value,
       text: event.source.triggerValue
     };
-    this.claims = [].concat(this.tempData.filter((x:any) =>{
+    this.claims = [].concat(this.tempData.filter((x: any) => {
       let event12 = new Date(x.date);
       if (event12.getFullYear() == this.selectedDay.text) {
         return true;
@@ -8201,13 +8208,13 @@ export class DashboardComponent implements OnInit {
   }
   selectedData(e: any) {
     this.selectedDataItems = e;
-    this.navOptions = 'addClaim';    
+    this.navOptions = 'addClaim';
   }
   getYear(e: any) {
     this.show = false;
     this.years = Number(e.value);
     this.ngOnInit();
-    
+
     setTimeout(() => {
       this.claims = this.claims.filter((data: any) => {
         let event = new Date(data.date);
@@ -8216,7 +8223,7 @@ export class DashboardComponent implements OnInit {
         } else {
           return false;
         }
-  
+
       })
       this.initFilter();
       this.show = true
@@ -8224,5 +8231,5 @@ export class DashboardComponent implements OnInit {
   }
 }
 export class Notifier {
-  valueChanged: (data:any) => void = (data:any) => { };    
+  valueChanged: (data: any) => void = (data: any) => { };
 }

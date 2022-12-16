@@ -1,5 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { debounce, interval } from 'rxjs';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
@@ -82,7 +83,7 @@ export class ClaimsApiService {
   }
 
   getCustomer() {
-    return this.http.get(environment.URL + `/customer`);
+    return this.http.get(`http://localhost:8400/customer`);
 
   }
   getCustomerReference() {
