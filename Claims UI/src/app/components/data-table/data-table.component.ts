@@ -326,11 +326,12 @@ export class DataTableOrdersComponent implements OnInit {
 	ngOnInit(): void {
 		this.filteredColumns = this.columns.filter(column => column.show === true);
 		this.filteredRows = this.rows;
-		let source$ = zip(this.http.getFacility());
-		source$.subscribe(([facility]) => {
+		let source$ = zip(this.http.getFacility(),this.http.getCustomer());
+		source$.subscribe(([facility,Customer]) => {
 			this.facilityList = facility;
+		this.customerList = Customer;
+
 		})
-		this.customerList = this.http.getCustomer();
 	}
 	public togglecolumnCheckbox(column: any) {
 		const isChecked = column.show;

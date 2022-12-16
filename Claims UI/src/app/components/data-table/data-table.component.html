@@ -102,8 +102,8 @@
                 <mat-label>Customer</mat-label>
                 <input type="text" placeholder="Pick one" formControlName="customer" aria-label="Number" matInput [matAutocomplete]="auto1">
                 <mat-autocomplete #auto1="matAutocomplete">
-                    <mat-option *ngFor="let option of customerList" [value]="option">
-                        {{option}}
+                    <mat-option *ngFor="let option of customerList" [value]="option.customerId">
+                        {{option.name}}
                     </mat-option>
                 </mat-autocomplete>
             </mat-form-field>
@@ -173,7 +173,7 @@
             <mat-date-range-picker #campaignTwoPicker></mat-date-range-picker>
         </mat-form-field>
         </span>
-        
+
         <button mat-raised-button color="primary" class="float-end reset" (click)="resetFilterApplied()"> RESET </button>
     </mat-card>
     <br />
