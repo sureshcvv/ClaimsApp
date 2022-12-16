@@ -122,19 +122,23 @@ export class DataTableComponent implements OnInit {
 	filteredObject: any;
 	filteredRowsAutoFill: any = {};
 	storedRows:any=[];
-	constructor(public dialog: MatDialog, private http: ClaimsApiService, private cd: ChangeDetectorRef) {
+	constructor(public dialog: MatDialog, private http: ClaimsApiService) {
 	}
 	ngOnInit(): void {
 		this.filteredColumns = this.columns.filter(column => column.show === true);
 		this.http.getClaims().subscribe((data: any) => {
 			// this.rows = data;
+			if(data.length>0){
+				data = data.reverse();
+
+			}
 			this.storedRows = data.map((item: any, index: number) => {
 				if (!item.creationDate) {
 					item.creationDate = this.rows[index].date
 				}
 				item.claimedAmount = Number(item.claimedAmount ? item.claimedAmount : 0);
 
-				return { ...item, ...this.rows[index] }
+				return { ...this.rows[index], ...item }
 			});
 			this.filteredRows = data.map((item: any, index: number) => {
 				if (!item.creationDate) {
@@ -142,7 +146,7 @@ export class DataTableComponent implements OnInit {
 				}
 				item.claimedAmount = Number(item.claimedAmount ? item.claimedAmount : 0);
 
-				return { ...item, ...this.rows[index] }
+				return { ...this.rows[index], ...item }
 			});
 
 		})
@@ -151,7 +155,7 @@ export class DataTableComponent implements OnInit {
 		this.filteredRowsAutoFill = this.columns.map((item: any) => item.props);
 		this.campaignOne.valueChanges.subscribe(data => {
 			if (data.start && data.end) {
-				this.filteredRows = this.storedRows.filter((item:any) => {
+				this.filteredRows = this.storedRows.filter((item: any) => {
 
 					let dateCheck = new Date(item.creationDate);
 
@@ -159,7 +163,7 @@ export class DataTableComponent implements OnInit {
 					let highDate = new Date(data.end);
 					console.log(highDate.getTime());
 
-					if(dateCheck.getTime() <= highDate.getTime() && dateCheck.getTime() >= lowDate.getTime()){
+					if (dateCheck.getTime() <= highDate.getTime() && dateCheck.getTime() >= lowDate.getTime()) {
 						return true;
 					} else return false;
 				})
@@ -180,7 +184,8 @@ export class DataTableComponent implements OnInit {
 		XLSX.writeFile(wb, 'claims.xlsx');
 	}
 	openDialog(row: any) {
-		const dialogRef = this.dialog.open(DetailsModalComponent, { data: row, autoFocus: false });
+		const dialogRef = this.dialog.open(DetailsModalComponent, { height: '600px',
+		width: '1000px',  data: row, autoFocus: false });
 
 		dialogRef.afterClosed().subscribe(result => {
 			console.log(`Dialog result: ${result}`);
@@ -210,6 +215,14 @@ export class DataTableComponent implements OnInit {
 			}
 		}
 	}
+
+	resetValue = new FormControl();
+	resetFilterApplied(){
+     	 this.filtersOption = {};
+	 this.resetValue.reset();
+	 this.filteredRows = this.storedRows;
+
+     }
 }
 
 @Component({
@@ -312,11 +325,10 @@ export class DataTableOrdersComponent implements OnInit {
 		this.filteredColumns = this.columns.filter(column => column.show === true);
 		this.filteredRows = this.rows;
 		let source$ = zip(this.http.getFacility());
-		source$.subscribe(([facility])=>{
+		source$.subscribe(([facility]) => {
 			this.facilityList = facility;
 		})
 		this.customerList = this.http.getCustomer();
-		this.cd.markForCheck();
 	}
 	public togglecolumnCheckbox(column: any) {
 		const isChecked = column.show;
@@ -331,7 +343,8 @@ export class DataTableOrdersComponent implements OnInit {
 		XLSX.writeFile(wb, 'claims.xlsx');
 	}
 	openDialog(row: any) {
-		const dialogRef = this.dialog.open(DetailsModalComponent, { data: row, autoFocus: false });
+		const dialogRef = this.dialog.open(DetailsModalComponent, { height: '400px',
+		width: '600px',  data: row, autoFocus: false });
 
 		dialogRef.afterClosed().subscribe(result => {
 			console.log(`Dialog result: ${result}`);
@@ -340,7 +353,6 @@ export class DataTableOrdersComponent implements OnInit {
 	editItem(row: any, index: any) {
 		this.addedClaims.push(row);
 		this.newItemEvent.emit(this.addedClaims);
-		this.cd.markForCheck();
 		// const dialogRef = this.dialog.open(ClaimsDetailsComponent, { data: { orders: this.http.getOrders() }, autoFocus: false });
 
 		// dialogRef.afterClosed().subscribe(result => {
@@ -359,4 +371,12 @@ export class DataTableOrdersComponent implements OnInit {
 			}
 		}
 	}
+
+	resetValue = new FormControl();
+	resetFilterApplied(){
+         this.filtersOption = {};
+	 this.resetValue.reset();
+	 this.filteredRows = this.rows;
+
+    }
 }

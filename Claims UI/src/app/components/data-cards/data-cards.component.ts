@@ -38,11 +38,17 @@ export class DataCardsComponent implements OnInit {
   ngOnInit(): void {
     this.getFacility();
     this.getClaims('');
+
     this.initFilter(this.rowData);
     this.Wearhouse = []
   }
   getFacility() {
     this.http.getFacility().subscribe(data => {
+      this.facilities = data;
+    })
+  }
+  getCustomer(){
+    this.http.getCustomer().subscribe(data => {
       this.facilities = data;
     })
   }
