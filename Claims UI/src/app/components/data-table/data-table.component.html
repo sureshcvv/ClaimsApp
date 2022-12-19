@@ -102,7 +102,7 @@
                 <mat-label>Customer</mat-label>
                 <input type="text" placeholder="Pick one" formControlName="customer" aria-label="Number" matInput [matAutocomplete]="auto1">
                 <mat-autocomplete #auto1="matAutocomplete">
-                    <mat-option *ngFor="let option of customerList" [value]="option.customerId">
+                    <mat-option *ngFor="let option of customerList" [value]="option.name">
                         {{option.name}}
                     </mat-option>
                 </mat-autocomplete>
