@@ -109,7 +109,7 @@ export class ClaimsDetailsComponent implements OnInit, OnDestroy {
   saveClaimDetails() {
     this.editServiceCall(this.firstFormGroup.value, this.costDetails.value);
     this.http.updateClaim(this.claimsUpdatedData, this.data.rowData.serviceProviderClaimId).subscribe(data=>{
-      location.reload();
+      console.log('Edit succesful', data)
     });
     this.sendBackEditData(this.firstFormGroup.value, this.costDetails.value);
     this.dialogRef.close({data: this.sendEditDataModel});
@@ -118,19 +118,20 @@ export class ClaimsDetailsComponent implements OnInit, OnDestroy {
   editServiceCall(firstFormGroup: any, costDetails: any) {
     this.claimsUpdatedData = new Claim();
     this.claimsUpdatedData._id = this.data.rowData._id;
-    this.claimsUpdatedData.create_date = this.formatDate(firstFormGroup.createdDate);
-    this.claimsUpdatedData.closed_date = this.formatDate(firstFormGroup.closedDate);
-    this.claimsUpdatedData.claim_id= this.data.rowData.claimId;
-    this.claimsUpdatedData.facility_id = firstFormGroup.facility;
-    this.claimsUpdatedData.pallet_quantity = this.data.rowData.palletQuantity;
-    this.claimsUpdatedData.document_type = this.data.rowData.documentType;
-    this.claimsUpdatedData.claimed_amount = costDetails.cost;
-    this.claimsUpdatedData.service_provider_claim_id = firstFormGroup.customerClaim;
-    this.claimsUpdatedData.claim_status = firstFormGroup.status;
-    this.claimsUpdatedData.claim_type = firstFormGroup.claimType.toUpperCase();
-    this.claimsUpdatedData.creator_id = '';
-    this.claimsUpdatedData.last_update_id = this.data.rowData.lastUpdateId;
-    this.claimsUpdatedData.last_update_date = this.data.rowData.lastUpdateDate;
+    this.claimsUpdatedData.createDate = this.formatDate(firstFormGroup.createdDate);
+    this.claimsUpdatedData.closedDate = this.formatDate(firstFormGroup.closedDate);
+    
+    this.claimsUpdatedData.claimId= this.data.rowData.claimId;
+    this.claimsUpdatedData.facilityId = firstFormGroup.facility;
+    this.claimsUpdatedData.palletQuantity = this.data.rowData.palletQuantity;
+    this.claimsUpdatedData.documentType = this.data.rowData.documentType;
+    this.claimsUpdatedData.claimedAmount = costDetails.cost;
+    this.claimsUpdatedData.serviceProviderClaimId = firstFormGroup.customerClaim;
+    this.claimsUpdatedData.claimStatus = firstFormGroup.status;
+    this.claimsUpdatedData.claimType = firstFormGroup.claimType.toUpperCase();
+    this.claimsUpdatedData.creatorId = '';
+    this.claimsUpdatedData.lastUpdateId = this.data.rowData.lastUpdateId;
+    this.claimsUpdatedData.lastUpdateDate = this.data.rowData.lastUpdateDate;
     return this.claimsUpdatedData;
   }
 

@@ -121,9 +121,10 @@ export class ClaimsApiService {
   }
 
   updateClaim(editedCalimsBody: any, serviceProviderId: number) {
+    const url = `http://localhost:8100/claims/${serviceProviderId}`;
   const headers= new HttpHeaders()
   .set('content-type', 'application/json')
   .set('Access-Control-Allow-Origin', '*');
-  return this.http.put<any>(`http://localhost:8100/claims/${serviceProviderId}` , editedCalimsBody, {headers});
+  return this.http.put<any>(url, editedCalimsBody);
   }
 }
