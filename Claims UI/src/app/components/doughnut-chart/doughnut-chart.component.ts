@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, DoCheck } from '@angular/core';
 import { Color, Label, SingleDataSet, PluginServiceGlobalRegistrationAndOptions } from 'ng2-charts';
 import { ClaimsApiService } from 'src/app/claims-api.service';
 @Component({
@@ -8,6 +8,11 @@ import { ClaimsApiService } from 'src/app/claims-api.service';
 })
 export class DoughnutChartComponent implements OnInit {
   @Input() claimData: any[] = [];
+  @Input() set facilityId(id: string) {
+    this.facilityChange = id;
+    this.facilityCheck();
+  };
+  facilityChange: string = '';
   public doughnutChartLabels: any[] = [];
   public doughnutChartData: any[] = [];
   public doughnutChartType: any = 'doughnut';
@@ -27,8 +32,34 @@ export class DoughnutChartComponent implements OnInit {
   ];
   constructor(private http: ClaimsApiService) { }
 
+  facilityCheck(): void {
+    if (this.facilityChange) {
+      this.http.getClaimByFacility(this.facilityChange).subscribe((data:any) => {
+        this.doughnutChartLabels = [];
+      this.doughnutChartData = [];
+      let ele: any = {};
+      data.map((item: any) => {
+        if (ele[item.claimStatus]) {
+          ele[item.claimStatus] += 1;
+        } else {
+          ele[item.claimStatus] = 1;
+        }
+      })
+      let values = Object.entries(ele);
+      values.forEach((status: any) => {
+        this.doughnutChartLabels.push(status[0] + ' - ' + status[1]);
+        this.doughnutChartData.push(status[1]);
+      })
+      })
+
+    } else {
+      this.ngOnInit();
+    }
+  }
   ngOnInit(): void {
     this.http.getClaims().subscribe((data: any) => {
+      this.doughnutChartLabels = [];
+      this.doughnutChartData = [];
       let ele: any = {};
       data.map((item: any) => {
         if (ele[item.claimStatus]) {

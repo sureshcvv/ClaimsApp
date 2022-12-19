@@ -23,6 +23,13 @@ export class DataTableComponent implements OnInit {
 	@Input() rows: any[] = [];
 	@Output() newItemEvent: any = new EventEmitter();
 	@Input() showActions: boolean = true;
+	@Input() set facilityId(id: string) {
+		this.facilityChange = id;
+		// this.facilityCheck();
+		this.ngOnInit();
+	};
+	showGrid = true;
+	facilityChange: string = '';
 	sortingfilters = false;
 	campaignOne = new FormGroup({
 		start: new FormControl(),
@@ -87,7 +94,7 @@ export class DataTableComponent implements OnInit {
 	}, {
 		name: "Claimed Amount",
 		props: "claimedAmount",
-		type: "number",
+		type: "text",
 		show: false
 	},
 	{
@@ -125,10 +132,11 @@ export class DataTableComponent implements OnInit {
 	constructor(public dialog: MatDialog, private http: ClaimsApiService, private cd: ChangeDetectorRef) {
 	}
 	ngOnInit(): void {
+		this.showGrid = false;
 		this.filteredColumns = this.columns.filter(column => column.show === true);
-		this.http.getClaims().subscribe((data: any) => {
+		this.http.getClaimByFacility(this.facilityChange).subscribe((data: any) => {
 			// this.rows = data;
-			if(data.length>0){
+			if (data.length > 0) {
 				data = data.reverse();
 
 			}
@@ -144,10 +152,11 @@ export class DataTableComponent implements OnInit {
 				if (!item.creationDate) {
 					item.creationDate = this.rows[index].date
 				}
-				item.claimedAmount = Number(item.claimedAmount ? item.claimedAmount : 0);
+				item.claimedAmount = '$' + Number(item.claimedAmount ? item.claimedAmount : 0);
 
 				return { ...this.rows[index], ...item }
 			});
+			this.showGrid = true;
 
 		})
 		this.cd.markForCheck();
@@ -241,6 +250,8 @@ export class DataTableOrdersComponent implements OnInit {
 		start: new FormControl(),
 		end: new FormControl(),
 	});
+	showGrid = true;
+
 	campaignTwo = new FormGroup({
 		start: new FormControl(),
 		end: new FormControl(),
