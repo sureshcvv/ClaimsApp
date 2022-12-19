@@ -163,7 +163,7 @@ export class ClaimsDetailsComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this._snackBar.open("Progress Saved", "Close");
+    this._snackBar.open("Progress Saved", "Close", {  duration: 2000 });
   }
 
   addQuantity(e: any, row: any) {
