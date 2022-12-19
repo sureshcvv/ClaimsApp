@@ -109,10 +109,10 @@ export class ClaimsDetailsComponent implements OnInit, OnDestroy {
   saveClaimDetails() {
     this.editServiceCall(this.firstFormGroup.value, this.costDetails.value);
     this.http.updateClaim(this.claimsUpdatedData, this.data.rowData.serviceProviderClaimId).subscribe(data=>{
-      console.log('Edit succesful', data)
+      console.log('Edit succesful!!')
+      this.sendBackEditData(this.firstFormGroup.value, this.costDetails.value);
+      this.dialogRef.close({data: this.sendEditDataModel});
     });
-    this.sendBackEditData(this.firstFormGroup.value, this.costDetails.value);
-    this.dialogRef.close({data: this.sendEditDataModel});
   }
 
   editServiceCall(firstFormGroup: any, costDetails: any) {
