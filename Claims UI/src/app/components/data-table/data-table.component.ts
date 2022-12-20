@@ -204,10 +204,12 @@ export class DataTableComponent implements OnInit {
 		const dialogRef = this.dialog.open(ClaimsDetailsComponent, { data: { orders: this.http.getOrders(), rowData: row }, autoFocus: false });
 
 		dialogRef.afterClosed().subscribe(result => {
-			const valueFromEditedData: any = JSON.stringify(result);
-			const editedData: any = result.data;
-			this.filteredRows = this.filteredRows.map(u => u._id !== editedData._id ? u : editedData);
-			this.cd.detectChanges();
+			if(result) {
+				const valueFromEditedData: any = JSON.stringify(result);
+				const editedData: any = result.data;
+				this.filteredRows = this.filteredRows.map(u => u._id !== editedData._id ? u : editedData);
+				this.cd.detectChanges();
+			}
 		});
 	}
 	facilityList: any = [];

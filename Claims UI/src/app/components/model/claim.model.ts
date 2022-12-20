@@ -1,4 +1,4 @@
-export class  Claim {
+export interface  Claim {
     claimId: string;
     facilityId: string;
     palletQuantity: number;
@@ -12,5 +12,5 @@ export class  Claim {
     closedDate: string;
     createDate: string;
     lastUpdateDate: string;
-    _id: string
+    _id: string;
 }

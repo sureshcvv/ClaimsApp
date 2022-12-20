@@ -24,7 +24,7 @@ export class ClaimsDetailsComponent implements OnInit, OnDestroy {
   costDetails!: FormGroup;
   paymentInformation!: FormGroup;
   additionalInfo!: FormGroup;
-  claimsUpdatedData!: Claim;
+  claimsUpdatedData = {} as Claim ;
   sendEditDataModel!: any;
 
   facilityList: any = [];
@@ -43,7 +43,6 @@ export class ClaimsDetailsComponent implements OnInit, OnDestroy {
       this.facilityList = data;
     });
 
-    // this.customerList = this.http.getCustomer();
     setTimeout(() => {
       this.ordersList = this.data.orders;
     }, 500)
@@ -55,6 +54,7 @@ export class ClaimsDetailsComponent implements OnInit, OnDestroy {
                             { "name": "LPN", props: "LPN" },
                             { "name": "NET", props: "NET" }];
 
+    this.firstFormGroup.controls['customerClaim'].disable()
   }
 
   initializeForm() {
@@ -64,13 +64,13 @@ export class ClaimsDetailsComponent implements OnInit, OnDestroy {
       customerClaim: [this.data.rowData.serviceProviderClaimId],
       customer: ['', Validators.required],
       facility: [this.data.rowData.facilityId, Validators.required],
-      wmsAccount: ['', Validators.required],
+      wmsAccount: ['123', Validators.required],
       claimType: [this.data.rowData.claimType.toLowerCase().charAt(0).toUpperCase() + this.data.rowData.claimType.toLowerCase().slice(1), Validators.required],
       claimCategory: [this.data.rowData.category, Validators.required],
       status: [this.data.rowData.claimStatus, Validators.required],
-      priorityFlag: ['', Validators.required],
-      commonType: ['', Validators.required],
-      issueType: ['', Validators.required],
+      priorityFlag: ['Low', Validators.required],
+      commonType: ['Low', Validators.required],
+      issueType: ['Low', Validators.required],
     });
 
     this.contactInformation = this._formBuilder.group({
@@ -88,15 +88,17 @@ export class ClaimsDetailsComponent implements OnInit, OnDestroy {
     });
 
     this.paymentInformation = this._formBuilder.group({
-      apVendor: ['', Validators.required], 
-      paidAmount: ['', Validators.required],
-      paymentReference: ['', Validators.required], 
-      paymentDate: ['', Validators.required],
-      invoiceNumber: ['', Validators.required], 
-      costCenter: ['', Validators.required],
-      glCode: ['',], accuralAmount: ['', Validators.required],
-      invoiceAmount: [''], claimedAmount: [0, Validators.required],
-      currencyType: ['', Validators.required],
+      apVendor: ['Vendor', Validators.required], 
+      paidAmount: ['27', Validators.required],
+      paymentReference: ['789Sd', Validators.required], 
+      paymentDate: ['12/19/2022', Validators.required],
+      invoiceNumber: ['123', Validators.required], 
+      costCenter: ['Billing team', Validators.required],
+      glCode: ['78usd'], 
+      accuralAmount: ['49', Validators.required],
+      invoiceAmount: ['49'], 
+      claimedAmount: [27, Validators.required],
+      currencyType: ['USD', Validators.required],
 
     });
 
@@ -116,7 +118,6 @@ export class ClaimsDetailsComponent implements OnInit, OnDestroy {
   }
 
   editServiceCall(firstFormGroup: any, costDetails: any) {
-    this.claimsUpdatedData = new Claim();
     this.claimsUpdatedData._id = this.data.rowData._id;
     this.claimsUpdatedData.createDate = this.formatDate(firstFormGroup.createdDate);
     this.claimsUpdatedData.closedDate = this.formatDate(firstFormGroup.closedDate);
