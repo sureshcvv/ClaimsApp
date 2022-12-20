@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, ChangeDetectorRef, ChangeDetectionStrategy } from '@angular/core';
 import * as XLSX from 'xlsx';
 import { DetailsModalComponent } from "./details-modal/details-modal.component"
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
@@ -16,7 +16,8 @@ const year = today.getFullYear();
 	// encapsulation: ViewEncapsulation.None,
 	selector: 'app-data-table',
 	templateUrl: './data-table.component.html',
-	styleUrls: ['./data-table.component.css']
+	styleUrls: ['./data-table.component.css'],
+	changeDetection: ChangeDetectionStrategy.Default
 })
 export class DataTableComponent implements OnInit {
 	@Input() rows: any[] = [];
@@ -127,8 +128,8 @@ export class DataTableComponent implements OnInit {
 	filteredRows: any[] = [];
 	filteredObject: any;
 	filteredRowsAutoFill: any = {};
-	storedRows: any = [];
-	constructor(public dialog: MatDialog, private http: ClaimsApiService) {
+	storedRows:any=[];
+	constructor(public dialog: MatDialog, private http: ClaimsApiService, private cd: ChangeDetectorRef) {
 	}
 	ngOnInit(): void {
 		this.showGrid = false;
@@ -158,6 +159,8 @@ export class DataTableComponent implements OnInit {
 			this.showGrid = true;
 
 		})
+		this.cd.markForCheck();
+
 		this.filteredRowsAutoFill = this.columns.map((item: any) => item.props);
 		this.campaignOne.valueChanges.subscribe(data => {
 			if (data.start && data.end) {
@@ -176,6 +179,7 @@ export class DataTableComponent implements OnInit {
 			}
 		})
 	}
+
 	public togglecolumnCheckbox(column: any) {
 		const isChecked = column.show;
 		column.show = !isChecked;
@@ -196,13 +200,17 @@ export class DataTableComponent implements OnInit {
 			console.log(`Dialog result: ${result}`);
 		});
 	}
-	editItem(row: any) {
-		const dialogRef = this.dialog.open(ClaimsDetailsComponent, { data: { orders: this.http.getOrders() }, autoFocus: false });
+
+	editItem(row: any, index: any) {
+		const dialogRef = this.dialog.open(ClaimsDetailsComponent, { data: { orders: this.http.getOrders(), rowData: row }, autoFocus: false });
 
 		dialogRef.afterClosed().subscribe(result => {
-			console.log(`Dialog result: ${result}`);
+			if(result) {
+				location.reload();
+			}
 		});
 	}
+	
 	facilityList: any = [];
 	customerList: any = [];
 	filtersOption: any = {};
@@ -217,7 +225,7 @@ export class DataTableComponent implements OnInit {
 			}
 		}
 	}
-	
+
 	resetValue = new FormControl();
 	resetFilterApplied(){
      	 this.filtersOption = {};
@@ -231,7 +239,8 @@ export class DataTableComponent implements OnInit {
 	// encapsulation: ViewEncapsulation.None,
 	selector: 'app-data-order-table',
 	templateUrl: './data-table.component.html',
-	styleUrls: ['./data-table.component.css']
+	styleUrls: ['./data-table.component.css'],
+	changeDetection: ChangeDetectionStrategy.Default
 })
 export class DataTableOrdersComponent implements OnInit {
 	@Input() rows: any[] = [];
@@ -320,7 +329,8 @@ export class DataTableOrdersComponent implements OnInit {
 		facility: [''],
 		customer: ['']
 	})
-	constructor(public dialog: MatDialog, private http: ClaimsApiService, private _formBuilder: FormBuilder) {
+	constructor(public dialog: MatDialog, private http: ClaimsApiService, private _formBuilder: FormBuilder,
+		private cd: ChangeDetectorRef) {
 	}
 
 	ngOnInit(): void {
@@ -352,9 +362,9 @@ export class DataTableOrdersComponent implements OnInit {
 			console.log(`Dialog result: ${result}`);
 		});
 	}
-	editItem(row: any) {
+	editItem(row: any, index: any) {
 		this.addedClaims.push(row);
-		this.newItemEvent.emit({ row: this.addedClaims, formValues: this.filteredObject.value });
+		this.newItemEvent.emit(this.addedClaims);
 		// const dialogRef = this.dialog.open(ClaimsDetailsComponent, { data: { orders: this.http.getOrders() }, autoFocus: false });
 
 		// dialogRef.afterClosed().subscribe(result => {
@@ -373,7 +383,7 @@ export class DataTableOrdersComponent implements OnInit {
 			}
 		}
 	}
-	
+
 	resetValue = new FormControl();
 	resetFilterApplied(){
          this.filtersOption = {};
