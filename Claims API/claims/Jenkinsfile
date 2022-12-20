@@ -1,69 +1,25 @@
 Jenkins file
 pipeline {
-  agent {
-        node {
-            label 'docker'
+    agent any
+     triggers {
+            pollSCM '* * * * *'
         }
-    }
-    options {
-        timestamps()
-    }
 
-    environment {
-
-
-    }
     stages {
-       stage('Clone repository') {
-                      steps {
-                          script{
-                          checkout scm
-                          }
-                      }
-                  }
-       stages {
-           stage('Build') {
-                agent {
-                    docker {
-
-                     reuseNode true
-                     image 'maven:3.8.5-jdk-17'
-                      }
-                     }
-       steps {
-
-                 withMaven(options: [findbugsPublisher(), junitPublisher(ignoreAttachments: false)]) {
-                    sh 'mvn clean findbugs:findbugs package'
-                 }
-             }
-             post {
-                 success {
-
-             archiveArtifacts(artifacts: '**/target/*.jar', allowEmptyArchive: true)
-            }
+        stage('Build') {
+            steps {
+                echo 'Building..'
             }
         }
-
-
-
-       stage('Build and Publish Image') {
-          when {
-                branch 'Praneetha_changes'  //only run these steps on the develop branch
+        stage('Test') {
+            steps {
+                echo 'Testing..'
             }
-
-
-             steps {
-
-               sh """
-          docker build -t ${IMAGE} .
-           docker tag ${IMAGE} ${IMAGE}:${VERSION}
-           docker push ${IMAGE}:${VERSION}
-
-      """
-      }
-          }
-      }
-  }
- //            stage('deploy'){
-//           }
-// //
+        }
+        stage('Deploy') {
+            steps {
+                echo 'Deploying....'
+            }
+        }
+    }
+}
