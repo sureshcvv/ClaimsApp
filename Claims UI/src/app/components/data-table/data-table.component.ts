@@ -200,18 +200,17 @@ export class DataTableComponent implements OnInit {
 			console.log(`Dialog result: ${result}`);
 		});
 	}
+
 	editItem(row: any, index: any) {
 		const dialogRef = this.dialog.open(ClaimsDetailsComponent, { data: { orders: this.http.getOrders(), rowData: row }, autoFocus: false });
 
 		dialogRef.afterClosed().subscribe(result => {
 			if(result) {
-				const valueFromEditedData: any = JSON.stringify(result);
-				const editedData: any = result.data;
-				this.filteredRows = this.filteredRows.map(u => u._id !== editedData._id ? u : editedData);
-				this.cd.detectChanges();
+				location.reload();
 			}
 		});
 	}
+	
 	facilityList: any = [];
 	customerList: any = [];
 	filtersOption: any = {};
