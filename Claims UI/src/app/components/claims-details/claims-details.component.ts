@@ -3,6 +3,7 @@ import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ColumnMode, SelectionType } from '@swimlane/ngx-datatable';
+import { Subscription } from 'rxjs';
 import { ClaimsApiService } from 'src/app/claims-api.service';
 import { Claim } from '../model/claim.model';
 
@@ -27,6 +28,7 @@ export class ClaimsDetailsComponent implements OnInit, OnDestroy {
   claimsUpdatedData = {} as Claim ;
   facilityList: any = [];
   customerList: string[] = [];
+  updateCalims: Subscription;
 
   constructor(public dialogRef: MatDialogRef<ClaimsDetailsComponent>,
               @Inject(MAT_DIALOG_DATA) public data: any, 
@@ -108,9 +110,13 @@ export class ClaimsDetailsComponent implements OnInit, OnDestroy {
 
   saveClaimDetails() {
     this.editServiceCall(this.firstFormGroup.value, this.costDetails.value);
-    this.http.updateClaim(this.claimsUpdatedData, this.data.rowData.serviceProviderClaimId).subscribe(data=>{
+    this.updateCalims = this.http.updateClaim(this.claimsUpdatedData, this.data.rowData.serviceProviderClaimId).subscribe((data)=>{
       console.log('Edit succesful!!')
+      this._snackBar.open("Progress Saved", "Close", {  duration: 5000 });
       this.dialogRef.close({data: this.claimsUpdatedData});
+    }, 
+    (error) => {
+      this._snackBar.open("Error while Editing", "Close", {  duration: 3000 });
     });
   }
 
@@ -133,7 +139,9 @@ export class ClaimsDetailsComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this._snackBar.open("Progress Saved", "Close", {  duration: 2000 });
+    if(this.updateCalims) {
+      this.updateCalims.unsubscribe();
+    }
   }
 
   addQuantity(e: any, row: any) {
