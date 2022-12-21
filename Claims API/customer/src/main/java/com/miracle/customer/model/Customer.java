@@ -17,9 +17,9 @@ import lombok.Setter;
 @Document(collection = "customer")
 @JsonInclude(value = Include.NON_NULL)
 public class Customer {
-	@Id
+@Id
 //	@Field("_id")
-	private String _id;
+private String _id;
 
 	@ApiModelProperty(required = true, value = "customer id", name = "customerId", dataType = "Integer", example = "1234")
 	@Field("customer_id")
