@@ -13,7 +13,6 @@
     </mat-drawer>
 
     <div class="example-sidenav-content" *ngIf="navOptions == 'home'" #dashboard>
-
         <div fxLayout="row" fxLayoutAlign="start center">
             <mat-form-field appearance="outline">
                 <mat-select matNativeControl required placeholder="Year" (selectionChange)="yearrange($event)">
