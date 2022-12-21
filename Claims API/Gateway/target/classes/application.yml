@@ -1,0 +1,33 @@
+server:
+  port: 8080
+management:
+  endpoints: 
+      web: 
+        exposure: 
+          include: '*'
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka 
+
+spring:
+  application:
+    name: gateway-service
+  cloud:
+    gateway:
+      routes:
+      - id: claims
+        uri: lb://claims
+        predicates:
+        - Path=/claims/**
+      - id: facility
+        uri: lb://facility
+        predicates:
+        - Path=/facility/**
+      - id: customer
+        uri: lb://customer
+        predicates:
+        - Path=/customer/**
+ 
+
+          
