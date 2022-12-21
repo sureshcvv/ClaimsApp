@@ -12,11 +12,8 @@ import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 @EnableEurekaClient
 public class ConfigServerApplication {
 
-// URL IS - http://localhost:8888/config-client-manish/default/master	
 	public static void main(String[] args) {
-		System.out.println("SPRING CLOUD CONFIG SERVER INITIATED");
 		SpringApplication.run(ConfigServerApplication.class, args);
-		System.out.println("SPRING CLOUD CONFIG SERVER STARTED ");
 	}
 
 }
