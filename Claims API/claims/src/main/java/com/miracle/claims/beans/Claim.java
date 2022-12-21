@@ -35,17 +35,21 @@ public class Claim {
 //	@Field("_id")
 	private String _id;
 
+
 	@ApiModelProperty(required = true, value = "customer claim id", name = "claimId", dataType = "String", example = "1234")
 	@Field("claim_id")
 	private String claimId;
+
 
 	@ApiModelProperty(required = true, value = "facility id", name = "facilityId", dataType = "String", example = "78402")
 	@Field("facility_id")
 	private String facilityId;
 
+
 	@ApiModelProperty(required = true, value = "pallet quantity", name = "palletQuantity", dataType = "Integer", example = "100")
 	@Field("pallet_quantity")
 	private Integer palletQuantity;
+
 
 	@ApiModelProperty(required = true, value = "document type", name = "documentType", dataType = "String", example = "RAIL")
 	@Field("document_type")

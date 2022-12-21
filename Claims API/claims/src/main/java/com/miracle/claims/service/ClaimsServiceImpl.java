@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import com.miracle.claims.beans.ClaimStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -131,14 +132,15 @@ public class ClaimsServiceImpl implements ClaimsService {
 	public Claim getCustomerClaim(String claimId) {
 		return claimsRepository.findByCustomerClaimId(claimId);
 	}
-	@Override
-	public ResponseEntity<List<Claim>> getAllClaimsByStatus(){
-		List<Claim> list = new ArrayList<>(); 
-		claimsRepository.findClaimsbyStatus();
-		System.out.println(list);
-		return new ResponseEntity<List<Claim>>(list, new HttpHeaders(), HttpStatus.OK);
 
+	@Override
+	public ResponseEntity<List<ClaimStatus>> getAllClaimsByStatus(){
+		List<ClaimStatus> list = new ArrayList<>();
+		claimsRepository.findClaimsbyStatus().forEach(list::add);
+		System.out.println(list);
+		return new ResponseEntity<List<ClaimStatus>>(list, new HttpHeaders(), HttpStatus.OK);
 	}
+
 	@Override
 	public ResponseEntity<List<Claim>> getClaimsByCreateDate(Date createdDate) {
 		List<Claim> list = new ArrayList<>();

@@ -3,6 +3,7 @@ package com.miracle.claims.controller;
 import java.util.Date;
 import java.util.List;
 
+import com.miracle.claims.beans.ClaimStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -213,11 +214,9 @@ public class ClaimsController {
 			@ApiResponse(code = 405, message = "Method not allowed", response = ErrorDetails.class),
 			@ApiResponse(code = 500, message = "Internal server error", response = ErrorDetails.class) })
 	@GetMapping("/claim-status")
-	public ResponseEntity<List<Claim>> getAllClaimsByClaimStatus(){
-		return claimsServices.getAllClaimsByStatus();
+	public ResponseEntity<List<ClaimStatus>> getAllClaimsByClaimStatus() {
+			return claimsServices.getAllClaimsByStatus();
 	}
-
-
 	/**
 	 * Gets the claims by claim status.
 	 *
@@ -350,6 +349,8 @@ public class ClaimsController {
 			@ApiParam(value = "Claim Create Date", required = true) @PathVariable("createdDate") Date createdDate) {
 		return claimsServices.getClaimsByCreateDate(createdDate);
 	}
+
+
 
 	/**
 	 * Gets the claims by date range.

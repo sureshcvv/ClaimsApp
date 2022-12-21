@@ -3,6 +3,7 @@ package com.miracle.claims.service;
 import java.util.Date;
 import java.util.List;
 
+import com.miracle.claims.beans.ClaimStatus;
 import org.springframework.http.ResponseEntity;
 
 import com.miracle.claims.beans.Claim;
@@ -10,7 +11,7 @@ import com.miracle.claims.beans.Claim;
 public interface ClaimsService {
 	
 	public ResponseEntity<List<Claim>> getAllClaims();
-	public ResponseEntity<List<Claim>> getAllClaimsByStatus();
+	public ResponseEntity<List<ClaimStatus>> getAllClaimsByStatus();
 	
 	public ResponseEntity<Claim> createClaims(Claim claim);
 	
