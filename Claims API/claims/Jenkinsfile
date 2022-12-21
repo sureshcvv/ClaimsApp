@@ -1,6 +1,8 @@
 pipeline {
      agent any
-
+     tools{
+          maven 'MAVEN'
+          }
         environment {
         //once you create ACR in Azure cloud, use that here
         registryName = "claimsservice"
@@ -20,40 +22,40 @@ pipeline {
 
         stage ('Build Docker image') {
             steps {
-                 dir('Claims API/claims/'){
-                     script {
 
-                         dockerImage = docker.build registryName
-                     }
+                script {
+                sh 'docker build -t claims-0.0.1-SNAPSHOT.jar'
+//                     sh 'sudo usermod -a -G docker jenkins'
+//                     dockerImage = docker.build registryName
                 }
             }
         }
 
-    // Uploading Docker images into ACR
-    stage('Upload Image to ACR') {
-     steps{
-         script {
-            docker.withRegistry( "http://${registryUrl}", registryCredential ) {
-            dockerImage.push()
-            }
-        }
-      }
-    }
+//     // Uploading Docker images into ACR
+//     stage('Upload Image to ACR') {
+//      steps{
+//          script {
+//             docker.withRegistry( "http://${registryUrl}", registryCredential ) {
+//             dockerImage.push()
+//             }
+//         }
+//       }
+//     }
+// //
+// //        // Stopping Docker containers for cleaner Docker run
+// //      stage('stop previous containers') {
+// //          steps {
+// //             sh 'docker ps -f name=mypythonContainer -q | xargs --no-run-if-empty docker container stop'
+// //             sh 'docker container ls -a -fname=mypythonContainer -q | xargs -r docker container rm'
+// //          }
+// //        }
 //
-//        // Stopping Docker containers for cleaner Docker run
-//      stage('stop previous containers') {
-//          steps {
-//             sh 'docker ps -f name=mypythonContainer -q | xargs --no-run-if-empty docker container stop'
-//             sh 'docker container ls -a -fname=mypythonContainer -q | xargs -r docker container rm'
-//          }
-//        }
-
-    stage('Docker Run') {
-     steps{
-         script {
-                sh 'docker run -d -p 8100:8080 --rm --name myClaimsContainer ${registryUrl}/${registryName}'
-            }
-      }
-    }
-    }
+//     stage('Docker Run') {
+//      steps{
+//          script {
+//                 sh 'docker run -d -p 8100:8080 --rm --name myClaimsContainer ${registryUrl}/${registryName}'
+//             }
+//       }
+//     }
+//     }
  }
