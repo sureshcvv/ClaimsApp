@@ -22,7 +22,7 @@ pipeline {
             steps {
                 dir('Claims API/claims'){
                 script {
-                sh 'docker build -t claims-0.0.1-SNAPSHOT.jar'
+                sh 'docker build -t claims-docker.jar .'
 //                     sh 'sudo usermod -a -G docker jenkins'
 //                     dockerImage = docker.build registryName
                         }
