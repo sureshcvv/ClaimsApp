@@ -47,6 +47,7 @@ import {MatSnackBarModule} from '@angular/material/snack-bar';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {MatGridListModule} from '@angular/material/grid-list';
 import { AuthGuard } from './auth.guard';
+import { ToastrModule } from 'ngx-toastr';
 
 @NgModule({
   declarations: [
@@ -98,7 +99,12 @@ import { AuthGuard } from './auth.guard';
    MatProgressSpinnerModule,
    HttpClientModule,
    MatGridListModule,
-   MatSelectModule
+   MatSelectModule,
+   ToastrModule.forRoot({
+    closeButton: true,
+    timeOut: 15000, // 15 seconds
+    progressBar: true,
+  }),
   ],
   providers: [ClaimsApiService,AuthGuard],
   bootstrap: [AppComponent]
