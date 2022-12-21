@@ -1,12 +1,13 @@
 package com.miracle.claims.repository;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.mongodb.repository.Query;
 import org.springframework.stereotype.Repository;
 
-import com.miracle.claims.entity.Claim;
+import com.miracle.claims.beans.Claim;
 @Repository
 public interface ClaimsRepository extends MongoRepository<Claim, String> {
 
@@ -33,7 +34,7 @@ public interface ClaimsRepository extends MongoRepository<Claim, String> {
 	public Claim findByCustomerClaimId(String claimId);
 	
 	@Query("{create_date :?0}")
-	public List<Claim> findByCreateDate(String createDate);
+	public List<Claim> findByCreateDate(Date createdDate);
 	
 	@Query("{closed_date :?0}")
 	public List<Claim> findByClosedDate(String closedDate);

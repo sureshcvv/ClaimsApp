@@ -1,6 +1,7 @@
 package com.miracle.claims.service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
-import com.miracle.claims.entity.Claim;
+import com.miracle.claims.beans.Claim;
 import com.miracle.claims.repository.ClaimsRepository;
 
 import lombok.extern.slf4j.Slf4j;
@@ -139,13 +140,13 @@ public class ClaimsServiceImpl implements ClaimsService {
 
 	}
 	@Override
-	public ResponseEntity<List<Claim>> getClaimsByCreateDate(String createDate) {
+	public ResponseEntity<List<Claim>> getClaimsByCreateDate(Date createdDate) {
 		List<Claim> list = new ArrayList<>();
-		if(createDate == null) {	
+		if(createdDate == null) {	
 			claimsRepository.findAll().forEach(list::add);
 		}
 		else {
-			claimsRepository.findByCreateDate(createDate).forEach(list::add);
+			claimsRepository.findByCreateDate(createdDate).forEach(list::add);
 		}	
 		return new ResponseEntity<List<Claim>>(list, new HttpHeaders(), HttpStatus.OK);
 	}
@@ -170,14 +171,5 @@ public class ClaimsServiceImpl implements ClaimsService {
 }
 	
 
-	/**
-	@Override
-	public Claim getCustomerClaim(String claimId) {
-		return claimsRepository.findByCustomerClaimId(claimId);
-	}
-
-	
-
-	**/
 
 
