@@ -33,7 +33,7 @@ import io.swagger.annotations.ApiResponses;
  * The Class ClaimsController.
  */
 @RestController
-@CrossOrigin(origins="https://app-test-demo.vercel.app")
+@CrossOrigin(origins="https://localhost:4200")
 @RequestMapping("/claims")
 public class ClaimsController {
 
