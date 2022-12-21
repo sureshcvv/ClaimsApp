@@ -1,8 +1,6 @@
 pipeline {
      agent any
-     tools{
-          maven 'MAVEN'
-          }
+    
         environment {
         //once you create ACR in Azure cloud, use that here
         registryName = "claimsservice"
