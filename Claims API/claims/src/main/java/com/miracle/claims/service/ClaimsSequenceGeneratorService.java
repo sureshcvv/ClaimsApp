@@ -5,14 +5,14 @@ import static org.springframework.data.mongodb.core.query.Criteria.where;
 import static org.springframework.data.mongodb.core.query.Query.query;
 import org.springframework.stereotype.Service;
 
+import com.miracle.claims.beans.ClaimsSequence;
+
 import java.util.Objects;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.data.mongodb.core.query.Update;
-
-import com.miracle.claims.entity.ClaimsSequence;
 
 @Service
 public class ClaimsSequenceGeneratorService {

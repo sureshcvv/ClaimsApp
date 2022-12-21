@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatDrawer } from '@angular/material/sidenav';
 import { ClaimsMockData } from '../mock-data/claims-list-constant';
+import { DashboardClaimsData } from '../mock-data/dashboard-claims.constant';
 
 @Component({
   selector: 'app-dashboard',
@@ -78,6 +79,7 @@ export class DashboardComponent implements OnInit {
     }, 0)
   }
 }
+
 export class Notifier {
   valueChanged: (data: any) => void = (data: any) => { };
 }

@@ -1,5 +1,6 @@
 package com.miracle.claims.controller;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,12 +14,13 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.miracle.claims.entity.Claim;
+import com.miracle.claims.beans.Claim;
 import com.miracle.claims.exception.ErrorDetails;
 import com.miracle.claims.service.ClaimsServiceImpl;
 
@@ -31,32 +33,13 @@ import io.swagger.annotations.ApiResponses;
  * The Class ClaimsController.
  */
 @RestController
-@CrossOrigin(origins="http://localhost:4200")
+@CrossOrigin(origins="https://app-test-demo.vercel.app")
+@RequestMapping("/claims")
 public class ClaimsController {
 
 	/** The claims services. */
 	@Autowired
 	private ClaimsServiceImpl claimsServices;
-	
-	/**
-	 * Gets the all claims.
-	 *
-	 * @return the all claims
-	 */
-	@ResponseBody
-	@ResponseStatus(HttpStatus.OK)
-	@ApiOperation(value = "returns the health", notes = "JSON Supported", response = Claim.class)
-	@ApiResponses({ @ApiResponse(code = 200, message = "success", response = Claim.class),
-			@ApiResponse(code = 400, message = "bad-request", response = ErrorDetails.class),
-			@ApiResponse(code = 401, message = "Unauthorized", response = ErrorDetails.class),
-			@ApiResponse(code = 403, message = "Claims service requires authentication - please check username and password", response = ErrorDetails.class),
-			@ApiResponse(code = 404, message = "Data not found", response = ErrorDetails.class),
-			@ApiResponse(code = 405, message = "Method not allowed", response = ErrorDetails.class),
-			@ApiResponse(code = 500, message = "Internal server error", response = ErrorDetails.class) })
-	@GetMapping("/claims/health")
-	public ResponseEntity<String> health() {
-		return new ResponseEntity<String>("Claim Application is running, yay!!!", new HttpHeaders(), HttpStatus.OK);
-	}
 	
 	/**
 	 * Gets the all claims.
@@ -73,7 +56,7 @@ public class ClaimsController {
 			@ApiResponse(code = 404, message = "Data not found", response = ErrorDetails.class),
 			@ApiResponse(code = 405, message = "Method not allowed", response = ErrorDetails.class),
 			@ApiResponse(code = 500, message = "Internal server error", response = ErrorDetails.class) })
-	@GetMapping("/claims")
+	@GetMapping("/")
 	public ResponseEntity<List<Claim>> getAllClaims() {
 		return claimsServices.getAllClaims();
 	}
@@ -94,7 +77,7 @@ public class ClaimsController {
 			@ApiResponse(code = 404, message = "Data not found", response = ErrorDetails.class),
 			@ApiResponse(code = 405, message = "Method not allowed", response = ErrorDetails.class),
 			@ApiResponse(code = 500, message = "Internal server error", response = ErrorDetails.class) })
-	@GetMapping("/claims/{serviceProviderClaimId}")
+	@GetMapping("/{serviceProviderClaimId}")
 	public ResponseEntity<Claim> getClaimsByServiceProviderClaimId(
 			@ApiParam(value = "Service Provide Claim Id", required = true) @PathVariable Long serviceProviderClaimId) {
 		return new ResponseEntity<Claim>(claimsServices.getClaim(serviceProviderClaimId), new HttpHeaders(),
@@ -117,7 +100,7 @@ public class ClaimsController {
 			@ApiResponse(code = 404, message = "Data not found", response = ErrorDetails.class),
 			@ApiResponse(code = 405, message = "Method not allowed", response = ErrorDetails.class),
 			@ApiResponse(code = 500, message = "Internal server error", response = ErrorDetails.class) })
-	@PostMapping("/claims")
+	@PostMapping("/addclaims")
 	public ResponseEntity<Claim> createClaims(
 			@ApiParam(value = "Claim Request", required = true) @RequestBody Claim claim) {
 		return claimsServices.createClaims(claim);
@@ -140,7 +123,7 @@ public class ClaimsController {
 			@ApiResponse(code = 404, message = "Data not found", response = ErrorDetails.class),
 			@ApiResponse(code = 405, message = "Method not allowed", response = ErrorDetails.class),
 			@ApiResponse(code = 500, message = "Internal server error", response = ErrorDetails.class) })
-	@PutMapping("/claims/{serviceProviderClaimId}")
+	@PutMapping("/{serviceProviderClaimId}")
 	public ResponseEntity<Claim> updateClaim(
 			@ApiParam(value = "Service Provider Claim Id", required = true) @PathVariable Long serviceProviderClaimId,
 			@ApiParam(value = "Claim Request", required = true) @RequestBody Claim claim) {
@@ -163,7 +146,7 @@ public class ClaimsController {
 			@ApiResponse(code = 404, message = "Data not found", response = ErrorDetails.class),
 			@ApiResponse(code = 405, message = "Method not allowed", response = ErrorDetails.class),
 			@ApiResponse(code = 500, message = "Internal server error", response = ErrorDetails.class) })
-	@DeleteMapping("/claims/{serviceProviderClaimId}")
+	@DeleteMapping("/{serviceProviderClaimId}")
 	public String deleteClaims(
 			@ApiParam(value = "Service Provider Claim Id", required = true) @PathVariable Long serviceProviderClaimId) {
 		return claimsServices.deleteClaims(serviceProviderClaimId);
@@ -186,7 +169,7 @@ public class ClaimsController {
 			@ApiResponse(code = 404, message = "Data not found", response = ErrorDetails.class),
 			@ApiResponse(code = 405, message = "Method not allowed", response = ErrorDetails.class),
 			@ApiResponse(code = 500, message = "Internal server error", response = ErrorDetails.class) })
-	@GetMapping("/claims/customer/{claimId}")
+	@GetMapping("/customer/{claimId}")
 	public ResponseEntity<Claim> getClaimsByCustomerClaimId(
 			@ApiParam(value = "Customer Claim Id", required = true) @PathVariable("claimId") String claimId) {
 		return new ResponseEntity<Claim>(claimsServices.getCustomerClaim(claimId),new HttpHeaders(),
@@ -209,7 +192,7 @@ public class ClaimsController {
 			@ApiResponse(code = 404, message = "Data not found", response = ErrorDetails.class),
 			@ApiResponse(code = 405, message = "Method not allowed", response = ErrorDetails.class),
 			@ApiResponse(code = 500, message = "Internal server error", response = ErrorDetails.class) })
-	@GetMapping("/claims/facility/{facilityId}")
+	@GetMapping("/facility/{facilityId}")
 	public ResponseEntity<List<Claim>> getClaimsByFacilityId(
 			@ApiParam(value = "Facility Id", required = true) @PathVariable("facilityId") String facilityId) {
 		return claimsServices.getFacilityClaim(facilityId);
@@ -229,7 +212,7 @@ public class ClaimsController {
 			@ApiResponse(code = 404, message = "Data not found", response = ErrorDetails.class),
 			@ApiResponse(code = 405, message = "Method not allowed", response = ErrorDetails.class),
 			@ApiResponse(code = 500, message = "Internal server error", response = ErrorDetails.class) })
-	@GetMapping("/claims/claim-status")
+	@GetMapping("/claim-status")
 	public ResponseEntity<List<Claim>> getAllClaimsByClaimStatus(){
 		return claimsServices.getAllClaimsByStatus();
 	}
@@ -251,7 +234,7 @@ public class ClaimsController {
 			@ApiResponse(code = 404, message = "Data not found", response = ErrorDetails.class),
 			@ApiResponse(code = 405, message = "Method not allowed", response = ErrorDetails.class),
 			@ApiResponse(code = 500, message = "Internal server error", response = ErrorDetails.class) })
-	@GetMapping("/claims/claimstatus/{claimStatus}")
+	@GetMapping("/claimstatus/{claimStatus}")
 	public ResponseEntity<List<Claim>> getClaimsByClaimStatus(
 			@ApiParam(value = "Claim Status", required = true) @PathVariable("claimStatus") String claimStatus) {
 		return claimsServices.getClaimsByStatus(claimStatus);
@@ -273,7 +256,7 @@ public class ClaimsController {
 			@ApiResponse(code = 404, message = "Data not found", response = ErrorDetails.class),
 			@ApiResponse(code = 405, message = "Method not allowed", response = ErrorDetails.class),
 			@ApiResponse(code = 500, message = "Internal server error", response = ErrorDetails.class) })
-	@GetMapping("/claims/claimtype/{claimType}")
+	@GetMapping("/claimtype/{claimType}")
 	public ResponseEntity<List<Claim>> getClaimsByClaimType(
 			@ApiParam(value = "Claim Type", required = true) @PathVariable("claimType") String claimType) {
 		return claimsServices.getClaimsByType(claimType);
@@ -295,7 +278,7 @@ public class ClaimsController {
 			@ApiResponse(code = 404, message = "Data not found", response = ErrorDetails.class),
 			@ApiResponse(code = 405, message = "Method not allowed", response = ErrorDetails.class),
 			@ApiResponse(code = 500, message = "Internal server error", response = ErrorDetails.class) })
-	@GetMapping("/claims/documenttype/{documentType}")
+	@GetMapping("/documenttype/{documentType}")
 	public ResponseEntity<List<Claim>> getClaimsByDocumentType(
 			@ApiParam(value = "Claim Document Type", required = true) @PathVariable("documentType") String documentType) {
 		return claimsServices.getClaimsByDocumentType(documentType);
@@ -340,7 +323,7 @@ public class ClaimsController {
 			@ApiResponse(code = 404, message = "Data not found", response = ErrorDetails.class),
 			@ApiResponse(code = 405, message = "Method not allowed", response = ErrorDetails.class),
 			@ApiResponse(code = 500, message = "Internal server error", response = ErrorDetails.class) })
-	@GetMapping("/claims/closedate/{closedDate}")
+	@GetMapping("/closedate/{closedDate}")
 	public ResponseEntity<List<Claim>> getClaimsByClosedDate(
 			@ApiParam(value = "Claim Closed Date", required = true) @RequestParam("closedDate") String closedDate) {
 		return claimsServices.getClaimsByClosedDate(closedDate);
@@ -362,10 +345,10 @@ public class ClaimsController {
 			@ApiResponse(code = 404, message = "Data not found", response = ErrorDetails.class),
 			@ApiResponse(code = 405, message = "Method not allowed", response = ErrorDetails.class),
 			@ApiResponse(code = 500, message = "Internal server error", response = ErrorDetails.class) })
-	@GetMapping("/claims/createdate/{createDate}")
+	@GetMapping("/createddate/{createdDate}")
 	public ResponseEntity<List<Claim>> getClaimsByCreateDate(
-			@ApiParam(value = "Claim Create Date", required = true) @PathVariable("createDate") String createDate) {
-		return claimsServices.getClaimsByCreateDate(createDate);
+			@ApiParam(value = "Claim Create Date", required = true) @PathVariable("createdDate") Date createdDate) {
+		return claimsServices.getClaimsByCreateDate(createdDate);
 	}
 
 	/**
