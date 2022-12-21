@@ -3,7 +3,7 @@ pipeline {
 
         environment {
         //once you create ACR in Azure cloud, use that here
-        registryName = "ClaimsService"
+        registryName = "claimsservice"
         //- update your credentials ID after creating credentials for connecting to ACR
         registryCredential = '6406f9c7-9ae3-42ba-9a55-38efba7f51cf'
         dockerImage = ''
