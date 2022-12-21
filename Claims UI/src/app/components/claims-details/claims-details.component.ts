@@ -28,7 +28,7 @@ export class ClaimsDetailsComponent implements OnInit, OnDestroy {
   claimsUpdatedData = {} as Claim ;
   facilityList: any = [];
   customerList: string[] = [];
-  updateCalims: Subscription;
+  updateCalims: Subscription = new Subscription();
 
   constructor(public dialogRef: MatDialogRef<ClaimsDetailsComponent>,
               @Inject(MAT_DIALOG_DATA) public data: any, 

@@ -1,7 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { ChartOptions, ChartType } from 'chart.js';
-import { Color, Label } from 'ng2-charts';
-import { AnimationFrameScheduler } from 'rxjs/internal/scheduler/AnimationFrameScheduler';
+import { Color } from 'ng2-charts';
 import { ClaimsApiService } from 'src/app/claims-api.service';
 
 @Component({
@@ -70,6 +69,7 @@ export class BarChartComponent implements OnInit {
   public barChartColor: Color[] = [
     { backgroundColor: ['#36A2EB', '#4BC0C0', '#FF6484', '#13FFFF', '#64FF16', '#36A2EB', '#4BC0C0', '#FF6484', '#13FFFF', '#64FF16', '#36A2EB', '#4BC0C0', '#FF6484', '#13FFFF', '#64FF16', '#36A2EB', '#4BC0C0', '#FF6484', '#13FFFF', '#64FF16'] },
   ];
+
   constructor(private http: ClaimsApiService) { }
 
   facilityCheck() {
@@ -97,7 +97,6 @@ export class BarChartComponent implements OnInit {
     } else {
       this.loadBarchart();
     }
-
   }
 
   loadBarchart() {
@@ -120,12 +119,10 @@ export class BarChartComponent implements OnInit {
 
       this.barChartLabels = this.barChartLabels.slice(0, 5);
       this.barchartFlag = true;
-
     })
   }
 
   ngOnInit(): void {
     this.facilityCheck();
   }
-
 }
