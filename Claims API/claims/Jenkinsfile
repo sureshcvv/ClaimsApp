@@ -21,10 +21,11 @@ pipeline {
        
         stage ('Build Docker image') {
             steps {
-                
+                 dir('Claims API/claims'){
                 script {
                     dockerImage = docker.build registryName
                 }
+                 }       
             }
         }
        
