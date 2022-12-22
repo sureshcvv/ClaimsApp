@@ -1,5 +1,8 @@
 pipeline {
 	agent none
+	environment{
+	   DOCKERHUB_CREDENTAILS= credentails('Dockerhub')
+	   }
   stages {
   	stage('Maven Install') {
     	agent {
@@ -14,10 +17,20 @@ pipeline {
     stage('Docker Build') {
     	agent any
       steps {
-	      dir('Claims API/claims'){     
-      	sh 'docker build -t apurva09/claims-docker.jar .'
-        }
-      }      
+      script{
+      dir('Claims API/claims'){
+      
+      	sh 'docker build -t pvattipalli/claims-docker.jar .'
+      	}
+      	}
+      }
+      stage('login'){
+      steps{
+      sh 'echo $DOCKERHUB_CREDENTAILS_PSW | docker login -u $DOCKERHUB_CREDENTAILS_USR --password-stdio'}
     }
   }
+  stage('push'){
+  steps{
+  sh 'docker push pvattipalli/claims-docker.jar'}
+}
 }
