@@ -1,62 +1,58 @@
-pipeline{
-   agent any
-   environment{
-   	   DOCKERHUB_CREDENTAILS= credentails('Dockerhub')
-   	   }
-   	   stages {
-         stage('Maven Install') {
-           	agent {
-             	image 'maven'
-                   }
-             steps {
-             	sh 'mvn clean install'
-             }
-           }
-   }
-   stage('Docker Build') {
-       	agent any
-           steps {
-             script{
-                 dir('Claims API/claims'){
-   
-         	      sh 'docker build -t pvattipalli/claims-docker.jar .'
-         	    }
-         	       }
-                   }
-            }       
-         stage('login'){
-         steps{
-         sh 'echo $DOCKERHUB_CREDENTAILS_PSW | docker login -u $DOCKERHUB_CREDENTAILS_USR --password-stdio'
-         }
-       }
-       stage('push'){
-         steps{
-         sh 'docker push pvattipalli/claims-docker.jar'
-         }
-       }
+pipeline {
+     agent any
+     
+        environment {
+        //once you create ACR in Azure cloud, use that here
+        registryName = "claimsservice"
+        //- update your credentials ID after creating credentials for connecting to ACR
+        registryCredential = 'ACR'
+        dockerImage = ''
+        registryUrl = 'claimsservice.azurecr.io'
+           
+    }
+    
+    stages {
+
+        stage ('checkout') {
+            steps {
+            checkout([$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[url: 'https://github.com/akannan1087/myPythonDockerRepo']]])
+            }
+        }
        
-     }
+        stage ('Build Docker image') {
+            steps {
+                
+                script {
+                    dockerImage = docker.build registryName
+                }
+            }
+        }
+       
+    // Uploading Docker images into ACR
+    stage('Upload Image to ACR') {
+     steps{   
+         script {
+            docker.withRegistry( "http://${registryUrl}", registryCredential ) {
+            dockerImage.push()
+            }
+        }
+      }
+    }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+       // Stopping Docker containers for cleaner Docker run
+     stage('stop previous containers') {
+         steps {
+            sh 'docker ps -f name=mypythonContainer -q | xargs --no-run-if-empty docker container stop'
+            sh 'docker container ls -a -fname=mypythonContainer -q | xargs -r docker container rm'
+         }
+       }
+      
+    stage('Docker Run') {
+     steps{
+         script {
+                sh 'docker run -d -p 8096:5000 --rm --name mypythonContainer ${registryUrl}/${registryName}'
+            }
+      }
+    }
+    }
+ }
