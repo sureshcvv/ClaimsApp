@@ -34,3 +34,4 @@ pipeline {
   sh 'docker push pvattipalli/claims-docker.jar'}
 }
 }
+}
