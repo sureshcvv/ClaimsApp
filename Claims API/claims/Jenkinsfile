@@ -1,14 +1,14 @@
 pipeline {
-	agent none
+	agent any
 	environment{
 	   DOCKERHUB_CREDENTAILS= credentails('Dockerhub')
 	   }
   stages {
   	stage('Maven Install') {
     	agent {
-      	docker {
+      	
         	image 'maven'
-        }
+        
       }
       steps {
       	sh 'mvn clean install'
