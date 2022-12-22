@@ -14,8 +14,10 @@ pipeline {
     stage('Docker Build') {
     	agent any
       steps {
-      	sh 'docker build -t pvattipalli/claims-docker.jar .'
-      }
+	      dir('Claims API/claims'){     
+      	sh 'docker build -t apurva09/claims-docker.jar .'
+        }
+      }      
     }
   }
 }
