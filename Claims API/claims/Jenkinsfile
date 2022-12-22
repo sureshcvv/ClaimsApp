@@ -15,7 +15,7 @@ pipeline {
 
         stage ('checkout') {
             steps {
-            checkout([$class: 'GitSCM', branches: [[name: '*/Praneetha_changes']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[url: '']]])
+            checkout([$class: 'GitSCM', branches: [[name: '*/Praneetha_changes']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[url: 'https://github.com/Development456/ClaimsApp.git']]])
             }
         }
        
@@ -42,15 +42,15 @@ pipeline {
        // Stopping Docker containers for cleaner Docker run
      stage('stop previous containers') {
          steps {
-            sh 'docker ps -f name=mypythonContainer -q | xargs --no-run-if-empty docker container stop'
-            sh 'docker container ls -a -fname=mypythonContainer -q | xargs -r docker container rm'
+            sh 'docker ps -f name=claimsContainer -q | xargs --no-run-if-empty docker container stop'
+            sh 'docker container ls -a -fname=claimsContainer -q | xargs -r docker container rm'
          }
        }
       
     stage('Docker Run') {
      steps{
          script {
-                sh 'docker run -d -p 8096:5000 --rm --name mypythonContainer ${registryUrl}/${registryName}'
+                sh 'docker run -d -p 8100:8080 --rm --name claimsContainer ${registryUrl}/${registryName}'
             }
       }
     }
