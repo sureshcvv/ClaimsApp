@@ -1,7 +1,10 @@
 package com.miracle.facility.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import com.miracle.facility.entity.Claim;
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -26,6 +29,7 @@ import io.swagger.annotations.ApiParam;
 //import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
+import org.springframework.web.client.RestTemplate;
 
 @RestController
 @CrossOrigin(origins="http://localhost:4200")
@@ -33,7 +37,14 @@ public class FacilityController {
 
 	@Autowired
 	private FacilityServiceImpl facilityServiceImpl;
-	
+
+	@Autowired
+	private RestTemplate restTemplate;
+
+	private static final String FACILTIY = "Facility";
+
+	private static final String CLAIMS_BASE_URL = "http://localhost:8080/";
+
 	@ResponseBody
 	@ResponseStatus(HttpStatus.OK)
 	@ApiOperation(value = "health of facilities service", notes = "JSON Supported", response = Facility.class)
@@ -278,5 +289,17 @@ public class FacilityController {
 		List<Facility> facility = facilityServiceImpl.getFacilityByCategory(facilityCategory);
 		return new ResponseEntity<List<Facility>>(facility,  new HttpHeaders(), HttpStatus.OK);
 	}
-	
+
+	@GetMapping("/facility/claims")
+	@CircuitBreaker(name = "facility", fallbackMethod = "serviceFallBack")
+	public ResponseEntity<Claim[]> getAllClaimsFromClaims(){
+		String url = CLAIMS_BASE_URL + "claims/";
+		return restTemplate.getForEntity(url, Claim[].class);
+	}
+
+	public ResponseEntity<List<Claim>> serviceFallBack(Exception e) {
+		List<Claim> list = new ArrayList<>();
+		System.out.println("This is a fallback method for Claims Microservice");
+		return new ResponseEntity<List<Claim>>(list, new HttpHeaders(), HttpStatus.NO_CONTENT);
+	}
 }

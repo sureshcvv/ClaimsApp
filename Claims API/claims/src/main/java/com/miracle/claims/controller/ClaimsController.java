@@ -352,6 +352,7 @@ public class ClaimsController {
 
 
 
+
 	/**
 	 * Gets the claims by date range.
 	 *
