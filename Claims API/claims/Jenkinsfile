@@ -8,6 +8,10 @@ pipeline {
         registryCredential = '6406f9c7-9ae3-42ba-9a55-38efba7f51cf'
         dockerImage = ''
         registryUrl = 'claimsservice.azurecr.io'
+        RESOURCE_GROUP='rg_springapp'
+        REPO="claimsservice"
+        IMAGE_NAME= dockerImage
+        TAG="0.0.1"
            
     }
     
@@ -51,7 +55,7 @@ pipeline {
     stage('Docker Run') {
      steps{
          script {
-                sh 'docker run -d -p 9100:9100 --name claimsContainer ${registryUrl}/${registryName}'
+                sh 'docker run -d -p 9100:9100 --name claimsContainer'
             }
       }
     }
