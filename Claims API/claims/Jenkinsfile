@@ -10,7 +10,7 @@ pipeline {
         registryUrl = 'claimsservice.azurecr.io'
         RESOURCE_GROUP='rg_springapp'
         REPO="claimsservice"
-        IMAGE_NAME= dockerImage
+        IMAGE_NAME= "${registryUrl}/${registryName}" 
         TAG="0.0.1"
            
     }
