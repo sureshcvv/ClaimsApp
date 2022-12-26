@@ -1,4 +1,4 @@
 FROM openjdk:11
 VOLUME /tmp
-ARG target/claims-0.0.1-SNAPSHOT.jar claims-docker.jar
-ENTRYPOINT ["java", "-jar", "claims-docker.jar"]
+ARG target/claims-0.0.1-SNAPSHOT.jar claims-0.0.1-SNAPSHOT.jar
+ENTRYPOINT ["java", "-jar", "claims-0.0.1-SNAPSHOT.jar"]
