@@ -8,6 +8,7 @@ import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { ClaimsDetailsComponent } from '../claims-details/claims-details.component';
 import { ClaimsApiService } from 'src/app/claims-api.service';
 import { zip } from 'rxjs';
+import { ToastrService } from 'ngx-toastr';
 
 const today = new Date();
 const month = today.getMonth();
@@ -128,7 +129,7 @@ export class DataTableComponent implements OnInit {
 	filteredRows: any[] = [];
 	filteredObject: any;
 	filteredRowsAutoFill: any = {};
-	storedRows:any=[];
+	storedRows: any = [];
 	constructor(public dialog: MatDialog, private http: ClaimsApiService, private cd: ChangeDetectorRef) {
 	}
 	ngOnInit(): void {
@@ -193,8 +194,10 @@ export class DataTableComponent implements OnInit {
 		XLSX.writeFile(wb, 'claims.xlsx');
 	}
 	openDialog(row: any) {
-		const dialogRef = this.dialog.open(DetailsModalComponent, { height: '600px',
-		width: '1000px',  data: row, autoFocus: false });
+		const dialogRef = this.dialog.open(DetailsModalComponent, {
+			height: '600px',
+			width: '1000px', data: row, autoFocus: false
+		});
 
 		dialogRef.afterClosed().subscribe(result => {
 			console.log(`Dialog result: ${result}`);
@@ -205,12 +208,12 @@ export class DataTableComponent implements OnInit {
 		const dialogRef = this.dialog.open(ClaimsDetailsComponent, { data: { orders: this.http.getOrders(), rowData: row }, autoFocus: false });
 
 		dialogRef.afterClosed().subscribe(result => {
-			if(result) {
+			if (result) {
 				location.reload();
 			}
 		});
 	}
-	
+
 	facilityList: any = [];
 	customerList: any = [];
 	filtersOption: any = {};
@@ -227,12 +230,12 @@ export class DataTableComponent implements OnInit {
 	}
 
 	resetValue = new FormControl();
-	resetFilterApplied(){
-     	 this.filtersOption = {};
-	 this.resetValue.reset();
-	 this.filteredRows = this.storedRows;
+	resetFilterApplied() {
+		this.filtersOption = {};
+		this.resetValue.reset();
+		this.filteredRows = this.storedRows;
 
-     }
+	}
 }
 
 @Component({
@@ -330,17 +333,19 @@ export class DataTableOrdersComponent implements OnInit {
 		customer: ['']
 	})
 	constructor(public dialog: MatDialog, private http: ClaimsApiService, private _formBuilder: FormBuilder,
-		private cd: ChangeDetectorRef) {
+		private cd: ChangeDetectorRef, private toastr: ToastrService) {
 	}
 
 	ngOnInit(): void {
 		this.filteredColumns = this.columns.filter(column => column.show === true);
 		this.filteredRows = this.rows;
-		let source$ = zip(this.http.getFacility());
-		source$.subscribe(([facility]) => {
+		let source$ = zip(this.http.getFacility(), this.http.getCustomer());
+		source$.subscribe(([facility, Customer]) => {
+
 			this.facilityList = facility;
+			this.customerList = Customer;
+
 		})
-		this.customerList = this.http.getCustomer();
 	}
 	public togglecolumnCheckbox(column: any) {
 		const isChecked = column.show;
@@ -349,20 +354,32 @@ export class DataTableOrdersComponent implements OnInit {
 	}
 
 	public onExportToExcel() {
-		const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(this.filteredRows);
-		const wb: XLSX.WorkBook = XLSX.utils.book_new();
-		XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
-		XLSX.writeFile(wb, 'claims.xlsx');
+		try {
+			this.toastr.success('Export Excel', 'Export to Excel Success!');
+
+			const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(this.filteredRows);
+			const wb: XLSX.WorkBook = XLSX.utils.book_new();
+			XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
+			XLSX.writeFile(wb, 'claims.xlsx');
+		} catch (e) {
+			this.toastr.warning('Export Excel', 'Export to Excel Failed!');
+
+		}
+
 	}
 	openDialog(row: any) {
-		const dialogRef = this.dialog.open(DetailsModalComponent, { height: '400px',
-		width: '600px',  data: row, autoFocus: false });
+		const dialogRef = this.dialog.open(DetailsModalComponent, {
+			height: '400px',
+			width: '600px', data: row, autoFocus: false
+		});
 
 		dialogRef.afterClosed().subscribe(result => {
 			console.log(`Dialog result: ${result}`);
 		});
 	}
 	editItem(row: any, index: any) {
+		this.toastr.info('Order Selected', 'Claim Details');
+
 		this.addedClaims.push(row);
 		this.newItemEvent.emit(this.addedClaims);
 		// const dialogRef = this.dialog.open(ClaimsDetailsComponent, { data: { orders: this.http.getOrders() }, autoFocus: false });
@@ -385,10 +402,10 @@ export class DataTableOrdersComponent implements OnInit {
 	}
 
 	resetValue = new FormControl();
-	resetFilterApplied(){
-         this.filtersOption = {};
-	 this.resetValue.reset();
-	 this.filteredRows = this.rows;
+	resetFilterApplied() {
+		this.filtersOption = {};
+		this.resetValue.reset();
+		this.filteredRows = this.rows;
 
-    }
+	}
 }
