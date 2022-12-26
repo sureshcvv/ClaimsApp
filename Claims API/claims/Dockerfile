@@ -1,5 +1,5 @@
 FROM openjdk:11
 VOLUME /tmp
 ARG target/claims-0.0.1-SNAPSHOT.jar claims-docker.jar
-COPY  target/claims-0.0.1-SNAPSHOT.jar claims-docker.jar
+//COPY  target/claims-0.0.1-SNAPSHOT.jar claims-docker.jar
 ENTRYPOINT ["java", "-jar", "claims-docker.jar"]
