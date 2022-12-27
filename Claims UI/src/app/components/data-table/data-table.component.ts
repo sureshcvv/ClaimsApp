@@ -90,7 +90,7 @@ export class DataTableComponent implements OnInit {
 			});
 			this.showGrid = true;
 
-		})
+		});
 		this.cd.markForCheck();
 
 		this.filteredRowsAutoFill = this.columns.map((item: any) => item.props);
