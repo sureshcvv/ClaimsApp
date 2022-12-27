@@ -33,7 +33,7 @@ import io.swagger.annotations.ApiResponses;
  * The Class ClaimsController.
  */
 @RestController
-@CrossOrigin(origins="https://localhost:4200")
+@CrossOrigin(origins="*")
 @RequestMapping("/claims")
 public class ClaimsController {
 
@@ -56,7 +56,7 @@ public class ClaimsController {
 			@ApiResponse(code = 404, message = "Data not found", response = ErrorDetails.class),
 			@ApiResponse(code = 405, message = "Method not allowed", response = ErrorDetails.class),
 			@ApiResponse(code = 500, message = "Internal server error", response = ErrorDetails.class) })
-	@GetMapping("/")
+	@GetMapping("")
 	public ResponseEntity<List<Claim>> getAllClaims() {
 		return claimsServices.getAllClaims();
 	}
