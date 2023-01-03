@@ -1,12 +1,12 @@
 version: '3'
 services:
   eureka-server:
-    build: D:\miracleproject\server
+    build: /home/azureuser/eurekaserver
     image: eureka-server
     ports: 
     - "8761:8761"
   claims:
-    build: D:\miracleproject\claims 
+    build: /home/azureuser/claims
     image: claims
     container_name: claims
     ports:
