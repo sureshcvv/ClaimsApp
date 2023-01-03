@@ -10,7 +10,7 @@ services:
     image: claims
     container_name: claims
     ports:
-    - "8100:8100"
+    - "9000:9000"
     links:
     - eureka-server
     depends_on:
