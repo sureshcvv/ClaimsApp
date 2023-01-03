@@ -3,7 +3,7 @@ services:
   eureka-server:
     build: /home/azureuser/eurekaserver
     image: eureka-server
-    ports: 
+    ports:
     - "8761:8761"
   claims:
     build: /home/azureuser/claims
@@ -16,47 +16,23 @@ services:
     depends_on:
      - mongodb
     environment:
-      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka-server:8761/eureka
-  facility: 
-    build: D:\miracleproject\facility 
-    image: facility
-    container_name: facility
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://20.163.181.235:8761/eureka
+  config-server:
+    build: /home/azureuser/configserver
+    image: configserver
+    container_name: config-server
     ports:
-    - "8200:8200"
+    - "8888:8888"
     links:
     - eureka-server
-    depends_on:
-     - mongodb
     environment:
-      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka-server:8761/eureka
-  customer: 
-    build: D:\miracleproject\customer\customer 
-    image: customer
-    container_name: customer
-    ports:
-    - "8400:8400"
-    links:
-    - eureka-server
-    depends_on:
-     - mongodb
-    environment:
-      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka-server:8761/eureka
-  api-gateway:
-    build: D:\miracleproject\Gateway
-    image: apigateway
-    container_name: apigateway
-    depends_on:
-     - eureka-server
-    environment:
-      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka-server:8761/eureka
-    restart: always
-    ports:
-        - "8080:8080"
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://20.163.181.235:8761/eureka
   mongodb:
     image : mongo
-    container_name: mongodb
-    ports: 
-      - "27017:27017"
+    container_name: claimsdb
+    ports:
+      - "2717:27017"
     restart: unless-stopped
+
    
   
